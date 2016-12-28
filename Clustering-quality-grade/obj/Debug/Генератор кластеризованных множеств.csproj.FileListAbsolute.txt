@@ -1,0 +1,12 @@
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Генератор кластеризованных множеств\Генератор кластеризованных множеств\bin\Debug\Генератор кластеризованных множеств.exe.config
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Генератор кластеризованных множеств\Генератор кластеризованных множеств\bin\Debug\Генератор кластеризованных множеств.exe
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Генератор кластеризованных множеств\Генератор кластеризованных множеств\bin\Debug\Генератор кластеризованных множеств.pdb
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Генератор кластеризованных множеств\Генератор кластеризованных множеств\obj\Debug\Генератор кластеризованных множеств.csprojResolveAssemblyReference.cache
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Генератор кластеризованных множеств\Генератор кластеризованных множеств\obj\Debug\Генератор_кластеризованных_множеств.MainForm.resources
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Генератор кластеризованных множеств\Генератор кластеризованных множеств\obj\Debug\Генератор_кластеризованных_множеств.Properties.Resources.resources
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Генератор кластеризованных множеств\Генератор кластеризованных множеств\obj\Debug\Генератор кластеризованных множеств.csproj.GenerateResource.Cache
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Генератор кластеризованных множеств\Генератор кластеризованных множеств\obj\Debug\Генератор кластеризованных множеств.exe
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Генератор кластеризованных множеств\Генератор кластеризованных множеств\obj\Debug\Генератор кластеризованных множеств.pdb
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Clustering-quality-grade\Генератор кластеризованных множеств\bin\Debug\Генератор кластеризованных множеств.exe.config
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Clustering-quality-grade\Генератор кластеризованных множеств\obj\Debug\Генератор кластеризованных множеств.exe
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Clustering-quality-grade\Генератор кластеризованных множеств\obj\Debug\Генератор кластеризованных множеств.pdb
