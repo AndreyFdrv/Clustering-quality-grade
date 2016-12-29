@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
 
-namespace Генератор_кластеризованных_множеств
+namespace Clustering_quality_grade
 {
     public partial class MainForm : Form
     {
@@ -31,8 +31,8 @@ namespace Генератор_кластеризованных_множеств
             {
                 int r = rand.Next(0, radius);
                 double alpha = rand.Next(0, 359);
-                int x =center.x+(int)(r * Math.Cos(alpha));
-                int y =center.y+(int)(r * Math.Sin(alpha));
+                int x =(int)center.coordinates[0]+(int)(r * Math.Cos(alpha));
+                int y =(int)center.coordinates[1]+(int)(r * Math.Sin(alpha));
                 gr.FillEllipse(myBrush, new Rectangle(x - point_radius, y - point_radius,
                    2 * point_radius, 2 * point_radius));
                 Point point=new Point(x, y);
@@ -52,8 +52,8 @@ namespace Генератор_кластеризованных_множеств
             {
                 int r = rand.Next(0, radius);
                 double alpha = rand.Next(0, 359);
-                int x = center.x + (int)(r * Math.Cos(alpha));
-                int y = center.y + (int)(r * Math.Sin(alpha));
+                int x = (int)center.coordinates[0] + (int)(r * Math.Cos(alpha));
+                int y = (int)center.coordinates[1] + (int)(r * Math.Sin(alpha));
                 int color_number = rand.Next(0, 3);
                 if (color_number == 0)
                     myBrush.Color = Color.Red;
@@ -70,6 +70,7 @@ namespace Генератор_кластеризованных_множеств
         }
         private void HighQualityButton_Click(object sender, EventArgs e)
         {
+            points.Clear();
             gr.Clear(Color.White);
             SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
             int radius = rand.Next(20, 60);
@@ -93,6 +94,7 @@ namespace Генератор_кластеризованных_множеств
         }
         private void MiddleQualityButton_Click(object sender, EventArgs e)
         {
+            points.Clear();
             gr.Clear(Color.White);
             SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
             int radius = rand.Next(20, 60);
@@ -116,6 +118,7 @@ namespace Генератор_кластеризованных_множеств
 
         private void LowQualityButton_Click(object sender, EventArgs e)
         {
+            points.Clear();
             gr.Clear(Color.White);
             int radius = rand.Next(20, 60);
             int x = rand.Next(radius, pictureBox.Width - radius);
@@ -133,6 +136,23 @@ namespace Генератор_кластеризованных_множеств
             Point p3 = new Point(x, y);
             CreateRandomizedCluster(p3, radius);
             pictureBox.Image = bitmap;
+        }
+
+        private void QualityGradeButton_Click(object sender, EventArgs e)
+        {
+            ArrayList ClusterInfo=new ArrayList();
+            for (int i = 0; i < points.Count; i++)
+                ClusterInfo.Add(((Point)points[i]).cluster_number);
+            ArrayList ClassInfo = new ArrayList();
+            for (int i = 0; i < 10; i++)
+                ClassInfo.Add(1);
+            for (int i = 10; i < 20; i++)
+                ClassInfo.Add(2);
+            for (int i = 20; i < 30; i++)
+                ClassInfo.Add(3);
+            F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
+            double f1=f1_meassure.F1();
+            MessageBox.Show(f1.ToString());
         }
     }
 }

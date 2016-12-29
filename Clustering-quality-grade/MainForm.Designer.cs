@@ -1,4 +1,4 @@
-﻿namespace Генератор_кластеризованных_множеств
+﻿namespace Clustering_quality_grade
 {
     partial class MainForm
     {
@@ -84,6 +84,7 @@
             this.QualityGradeButton.TabIndex = 5;
             this.QualityGradeButton.Text = "Оценка качества";
             this.QualityGradeButton.UseVisualStyleBackColor = true;
+            this.QualityGradeButton.Click += new System.EventHandler(this.QualityGradeButton_Click);
             // 
             // MainForm
             // 

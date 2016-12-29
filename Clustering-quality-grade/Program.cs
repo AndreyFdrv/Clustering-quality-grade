@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Генератор_кластеризованных_множеств
+namespace Clustering_quality_grade
 {
     static class Program
     {

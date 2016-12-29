@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 
-namespace Генератор_кластеризованных_множеств
+namespace Clustering_quality_grade
 {
     class F1_meassure
     {
@@ -15,11 +15,64 @@ namespace Генератор_кластеризованных_множеств
             this.ClusterInfo = ClusterInfo;
             this.ClassInfo = ClassInfo;
         }
-
         public double Precession(int ClusterNumber, int ClassNumber)
         {
-            int nij=0;
-            return 0;
+            double nij=0, ni=0;
+            for (int i = 0; i < ClusterInfo.Count; i++ )
+            {
+                if (((int)ClusterInfo[i] == ClusterNumber) && ((int)ClassInfo[i] == ClassNumber))
+                    nij++;
+                if ((int)ClusterInfo[i] == ClusterNumber)
+                    ni++;
+            }
+            return nij/ni;
+        }
+        public double Recall(int ClusterNumber, int ClassNumber)
+        {
+            double nij = 0, nj = 0;
+            for (int i = 0; i < ClusterInfo.Count; i++)
+            {
+                if (((int)ClusterInfo[i] == ClusterNumber) && ((int)ClassInfo[i] == ClassNumber))
+                    nij++;
+                if ((int)ClassInfo[i] == ClassNumber)
+                    nj++;
+            }
+            return nij / nj;
+        }
+        public double F1(int ClusterNumber, int ClassNumber)
+        {
+            double precession, recall;
+            precession = Precession(ClusterNumber, ClassNumber);
+            recall = Recall(ClusterNumber, ClassNumber);
+            if ((precession == 0) && (recall == 0))
+                return 0;
+            return 2*precession*recall/(precession+recall);
+        }
+        public double F1()
+        {
+            ArrayList ClassSides = new ArrayList();
+            ArrayList ClassF1Maximumes = new ArrayList();
+            int j = 1;
+            while(ClassInfo.Contains(j))
+            {
+                double side = 0;
+                double F1_max = -10000;
+                for (int i = 0; i < ClassInfo.Count; i++)
+                {
+                    if ((int)ClassInfo[i] == j)
+                        side++;
+                    double cur_res=F1(i, j);
+                    if (cur_res > F1_max)
+                        F1_max = cur_res;
+                }
+                ClassSides.Add(side);
+                ClassF1Maximumes.Add(F1_max);
+                j++;
+            }
+            double res=0;
+            for (j = 0; j < ClassSides.Count; j++)
+                res += (double)ClassSides[j] / ClusterInfo.Count * (double)ClassF1Maximumes[j];
+            return res;
         }
     }
 }

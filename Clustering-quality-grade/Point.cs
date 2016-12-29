@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
-namespace Генератор_кластеризованных_множеств
+namespace Clustering_quality_grade
 {
     struct Point
     {
-            public int x;
-            public int y;
+            public ArrayList coordinates;
             public int cluster_number;
             public Point(int x, int y)
             {
-                this.x = x;
-                this.y = y;
+                coordinates = new ArrayList();
+                coordinates.Add(x);
+                coordinates.Add(y);
+                cluster_number = 0;
+            }
+            public Point(ArrayList coordinates)
+            {
+                this.coordinates = coordinates;
                 cluster_number = 0;
             }
     }
