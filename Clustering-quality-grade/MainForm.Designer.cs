@@ -33,6 +33,7 @@
             this.MiddleQualityButton = new System.Windows.Forms.Button();
             this.LowQualityButton = new System.Windows.Forms.Button();
             this.QualityGradeButton = new System.Windows.Forms.Button();
+            this.TimeCalculationButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,11 +87,22 @@
             this.QualityGradeButton.UseVisualStyleBackColor = true;
             this.QualityGradeButton.Click += new System.EventHandler(this.QualityGradeButton_Click);
             // 
+            // TimeCalculationButton
+            // 
+            this.TimeCalculationButton.Location = new System.Drawing.Point(535, 233);
+            this.TimeCalculationButton.Name = "TimeCalculationButton";
+            this.TimeCalculationButton.Size = new System.Drawing.Size(139, 47);
+            this.TimeCalculationButton.TabIndex = 6;
+            this.TimeCalculationButton.Text = "Расчёт времени работы";
+            this.TimeCalculationButton.UseVisualStyleBackColor = true;
+            this.TimeCalculationButton.Click += new System.EventHandler(this.TimeCalculationButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(682, 541);
+            this.Controls.Add(this.TimeCalculationButton);
             this.Controls.Add(this.QualityGradeButton);
             this.Controls.Add(this.LowQualityButton);
             this.Controls.Add(this.MiddleQualityButton);
@@ -109,5 +121,6 @@
         private System.Windows.Forms.Button MiddleQualityButton;
         private System.Windows.Forms.Button LowQualityButton;
         private System.Windows.Forms.Button QualityGradeButton;
+        private System.Windows.Forms.Button TimeCalculationButton;
     }
 }

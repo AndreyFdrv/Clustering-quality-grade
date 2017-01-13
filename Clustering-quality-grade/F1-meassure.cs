@@ -52,8 +52,13 @@ namespace Clustering_quality_grade
         {
             ArrayList ClassSides = new ArrayList();
             ArrayList ClassF1Maximumes = new ArrayList();
-            int j = 1;
-            while(ClassInfo.Contains(j))
+            int class_max_number = 0;
+            for (int i = 0; i < ClassInfo.Count; i++)
+            {
+                if ((int) ClassInfo[i] > class_max_number)
+                    class_max_number =(int) ClassInfo[i];
+            }
+            for (int j = 1; j <= class_max_number; j++)
             {
                 double side = 0;
                 double F1_max = -10000;
@@ -61,16 +66,15 @@ namespace Clustering_quality_grade
                 {
                     if ((int)ClassInfo[i] == j)
                         side++;
-                    double cur_res=F1(i, j);
+                    double cur_res = F1(i, j);
                     if (cur_res > F1_max)
                         F1_max = cur_res;
                 }
                 ClassSides.Add(side);
                 ClassF1Maximumes.Add(F1_max);
-                j++;
             }
             double res=0;
-            for (j = 0; j < ClassSides.Count; j++)
+            for (int j = 0; j < ClassSides.Count; j++)
                 res += (double)ClassSides[j] / ClusterInfo.Count * (double)ClassF1Maximumes[j];
             return res;
         }

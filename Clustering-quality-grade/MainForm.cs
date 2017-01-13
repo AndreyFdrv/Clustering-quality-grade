@@ -152,7 +152,13 @@ namespace Clustering_quality_grade
                 ClassInfo.Add(3);
             F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
             double f1=f1_meassure.F1();
-            MessageBox.Show(f1.ToString());
+            MessageBox.Show("F1-мера: "+f1.ToString());
+        }
+
+        private void TimeCalculationButton_Click(object sender, EventArgs e)
+        {
+            TimeCalculationForm form = new TimeCalculationForm();
+            form.ShowDialog();
         }
     }
 }

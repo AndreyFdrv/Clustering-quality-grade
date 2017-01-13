@@ -18,10 +18,10 @@ namespace Clustering_quality_grade
                 coordinates.Add(y);
                 cluster_number = 0;
             }
-            public Point(ArrayList coordinates)
+            public Point(ArrayList coordinates, int cluster_number)
             {
                 this.coordinates = coordinates;
-                cluster_number = 0;
+                this.cluster_number = cluster_number;
             }
     }
 }
