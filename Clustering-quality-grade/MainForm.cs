@@ -137,8 +137,7 @@ namespace Clustering_quality_grade
             CreateRandomizedCluster(p3, radius);
             pictureBox.Image = bitmap;
         }
-
-        private void QualityGradeButton_Click(object sender, EventArgs e)
+        double ComputeF1_meassure()
         {
             ArrayList ClusterInfo=new ArrayList();
             for (int i = 0; i < points.Count; i++)
@@ -151,8 +150,14 @@ namespace Clustering_quality_grade
             for (int i = 20; i < 30; i++)
                 ClassInfo.Add(3);
             F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
-            double f1=f1_meassure.F1();
-            MessageBox.Show("F1-мера: "+f1.ToString());
+            return f1_meassure.F1();
+        }
+        private void QualityGradeButton_Click(object sender, EventArgs e)
+        {
+            String output = "F1-мера: " + ComputeF1_meassure()+"\r\n";
+            Calinski_Harabasz_criterion CHC = new Calinski_Harabasz_criterion(points);
+            output += "Критерий Calinski Harabasz: " + CHC.compute_criterion() + "\r\n";
+            MessageBox.Show(output);
         }
 
         private void TimeCalculationButton_Click(object sender, EventArgs e)

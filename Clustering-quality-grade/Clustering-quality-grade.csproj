@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calinski_Harabasz_criterion.cs" />
     <Compile Include="F1-meassure.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

@@ -30,6 +30,7 @@
         {
             this.F1_meassure_rb = new System.Windows.Forms.RadioButton();
             this.Start = new System.Windows.Forms.Button();
+            this.Calinski_Harabasz_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // F1_meassure_rb
@@ -53,11 +54,23 @@
             this.Start.UseVisualStyleBackColor = true;
             this.Start.Click += new System.EventHandler(this.Start_Click);
             // 
+            // Calinski_Harabasz_rb
+            // 
+            this.Calinski_Harabasz_rb.AutoSize = true;
+            this.Calinski_Harabasz_rb.Location = new System.Drawing.Point(12, 35);
+            this.Calinski_Harabasz_rb.Name = "Calinski_Harabasz_rb";
+            this.Calinski_Harabasz_rb.Size = new System.Drawing.Size(160, 17);
+            this.Calinski_Harabasz_rb.TabIndex = 2;
+            this.Calinski_Harabasz_rb.TabStop = true;
+            this.Calinski_Harabasz_rb.Text = "Критерий Calinski-Harabasz";
+            this.Calinski_Harabasz_rb.UseVisualStyleBackColor = true;
+            // 
             // TimeCalculationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(308, 176);
+            this.Controls.Add(this.Calinski_Harabasz_rb);
             this.Controls.Add(this.Start);
             this.Controls.Add(this.F1_meassure_rb);
             this.Name = "TimeCalculationForm";
@@ -71,5 +84,6 @@
 
         private System.Windows.Forms.RadioButton F1_meassure_rb;
         private System.Windows.Forms.Button Start;
+        private System.Windows.Forms.RadioButton Calinski_Harabasz_rb;
     }
 }
