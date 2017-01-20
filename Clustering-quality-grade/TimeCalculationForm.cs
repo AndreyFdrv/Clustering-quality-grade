@@ -185,12 +185,83 @@ namespace Clustering_quality_grade
             }
             writer.Close();
         }
+        private void Dunn_index_time_calculation()
+        {
+            int clusters_count, dimension;
+            long objects_count;
+            dimension = 3;
+            objects_count = 1000;
+            Stopwatch sw = new Stopwatch();
+            FileStream file = new FileStream("Индекс Данна.txt", FileMode.Create, FileAccess.Write);
+            StreamWriter writer = new StreamWriter(file);
+            writer.Write(" \t");
+            writer.Write("Индекс Данна\r\n");
+            writer.Write("Размерность: " + dimension.ToString() + "\t");
+            writer.Write("Количество объектов: " + objects_count.ToString() + "\r\n");
+            writer.Write("Количество кластеров:\tВремя, с:\r\n");
+            for (clusters_count = 2; clusters_count <= 10; clusters_count++)
+            {
+                ArrayList objects = GenerateObjects(clusters_count, dimension, objects_count);
+                Dunn_index index = new Dunn_index(objects);
+                float sum_time = 0;
+                for (int i = 0; i < 5; i++)
+                {
+                    sw.Restart();
+                    index.compute();
+                    sw.Stop();
+                    sum_time += (float)sw.ElapsedMilliseconds / 1000;
+                }
+                writer.Write(clusters_count.ToString() + "\t");
+                writer.Write((sum_time / 5).ToString() + "\r\n");
+            }
+            clusters_count = 3;
+            writer.Write("Количество кластеров: " + clusters_count.ToString() + "\t");
+            writer.Write("Количество объектов: " + objects_count.ToString() + "\r\n");
+            writer.Write("Размерность:\tВремя, с:\r\n");
+            for (dimension = 1; dimension <= 10; dimension++)
+            {
+                ArrayList objects = GenerateObjects(clusters_count, dimension, objects_count);
+                Dunn_index index = new Dunn_index(objects);
+                float sum_time = 0;
+                for (int i = 0; i < 5; i++)
+                {
+                    sw.Restart();
+                    index.compute();
+                    sw.Stop();
+                    sum_time += (float)sw.ElapsedMilliseconds / 1000;
+                }
+                writer.Write(dimension.ToString() + "\t");
+                writer.Write((sum_time / 5).ToString() + "\r\n");
+            }
+            dimension = 3;
+            writer.Write("Количество кластеров: " + clusters_count.ToString() + "\t");
+            writer.Write("Размерность: " + dimension.ToString() + "\r\n");
+            writer.Write("Количество объектов:\tВремя, с:\r\n");
+            for (objects_count = 1000; objects_count <= 10000; objects_count += 1000)
+            {
+                ArrayList objects = GenerateObjects(clusters_count, dimension, objects_count);
+                Dunn_index index = new Dunn_index(objects);
+                float sum_time = 0;
+                for (int i = 0; i < 5; i++)
+                {
+                    sw.Restart();
+                    index.compute();
+                    sw.Stop();
+                    sum_time += (float)sw.ElapsedMilliseconds / 1000;
+                }
+                writer.Write(objects_count.ToString() + "\t");
+                writer.Write((sum_time / 5).ToString() + "\r\n");
+            }
+            writer.Close();
+        }
         private void Start_Click(object sender, EventArgs e)
         {
             if (F1_meassure_rb.Checked)
                 F1_meassure_time_calculation();
             else if (Calinski_Harabasz_rb.Checked)
                 Calinski_Harabasz_time_calculation();
+            else if (Dunn_rb.Checked)
+                Dunn_index_time_calculation();
             MessageBox.Show("Расчёт времени окончен, результат находится в папке с исполнимым файлом");
         }
     }

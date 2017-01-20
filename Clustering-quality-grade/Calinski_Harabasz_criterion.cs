@@ -48,7 +48,10 @@ namespace Clustering_quality_grade
                     count++;
                 }
             }
-            return sum / count;
+            if (count == 0)
+                return 0;
+            else
+                return sum / count;
         }
         private double sum_in()
         {
@@ -59,7 +62,7 @@ namespace Clustering_quality_grade
                     clusters_count = ((Point)objects[i]).cluster_number;
             }
             double sum = 0;
-            for (int i = 1; i < clusters_count; i++)
+            for (int i = 1; i <= clusters_count; i++)
             {
                 int cluster_size=0;
                 for (int j = 0; j < objects.Count; j++)
@@ -80,7 +83,7 @@ namespace Clustering_quality_grade
                     clusters_count = ((Point)objects[i]).cluster_number;
             }
             double sum = 0;
-            for (int i = 1; i < clusters_count; i++)
+            for (int i = 1; i <= clusters_count; i++)
             {
                 int cluster_size = 0;
                 for (int j = 0; j < objects.Count; j++)

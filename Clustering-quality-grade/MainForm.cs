@@ -157,6 +157,8 @@ namespace Clustering_quality_grade
             String output = "F1-мера: " + ComputeF1_meassure()+"\r\n";
             Calinski_Harabasz_criterion CHC = new Calinski_Harabasz_criterion(points);
             output += "Критерий Calinski Harabasz: " + CHC.compute_criterion() + "\r\n";
+            Dunn_index dunn = new Dunn_index(points);
+            output += "Индекс Данна: " + dunn.compute() + "\r\n";
             MessageBox.Show(output);
         }
 

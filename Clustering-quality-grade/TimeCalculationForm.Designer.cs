@@ -31,6 +31,7 @@
             this.F1_meassure_rb = new System.Windows.Forms.RadioButton();
             this.Start = new System.Windows.Forms.Button();
             this.Calinski_Harabasz_rb = new System.Windows.Forms.RadioButton();
+            this.Dunn_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // F1_meassure_rb
@@ -65,11 +66,23 @@
             this.Calinski_Harabasz_rb.Text = "Критерий Calinski-Harabasz";
             this.Calinski_Harabasz_rb.UseVisualStyleBackColor = true;
             // 
+            // Dunn_rb
+            // 
+            this.Dunn_rb.AutoSize = true;
+            this.Dunn_rb.Location = new System.Drawing.Point(12, 58);
+            this.Dunn_rb.Name = "Dunn_rb";
+            this.Dunn_rb.Size = new System.Drawing.Size(99, 17);
+            this.Dunn_rb.TabIndex = 3;
+            this.Dunn_rb.TabStop = true;
+            this.Dunn_rb.Text = "Индекс Данна";
+            this.Dunn_rb.UseVisualStyleBackColor = true;
+            // 
             // TimeCalculationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(308, 176);
+            this.Controls.Add(this.Dunn_rb);
             this.Controls.Add(this.Calinski_Harabasz_rb);
             this.Controls.Add(this.Start);
             this.Controls.Add(this.F1_meassure_rb);
@@ -85,5 +98,6 @@
         private System.Windows.Forms.RadioButton F1_meassure_rb;
         private System.Windows.Forms.Button Start;
         private System.Windows.Forms.RadioButton Calinski_Harabasz_rb;
+        private System.Windows.Forms.RadioButton Dunn_rb;
     }
 }
