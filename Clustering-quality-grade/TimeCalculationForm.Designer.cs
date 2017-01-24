@@ -32,6 +32,7 @@
             this.Start = new System.Windows.Forms.Button();
             this.Calinski_Harabasz_rb = new System.Windows.Forms.RadioButton();
             this.Dunn_rb = new System.Windows.Forms.RadioButton();
+            this.DBI_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // F1_meassure_rb
@@ -77,11 +78,23 @@
             this.Dunn_rb.Text = "Индекс Данна";
             this.Dunn_rb.UseVisualStyleBackColor = true;
             // 
+            // DBI_rb
+            // 
+            this.DBI_rb.AutoSize = true;
+            this.DBI_rb.Location = new System.Drawing.Point(12, 81);
+            this.DBI_rb.Name = "DBI_rb";
+            this.DBI_rb.Size = new System.Drawing.Size(156, 17);
+            this.DBI_rb.TabIndex = 4;
+            this.DBI_rb.TabStop = true;
+            this.DBI_rb.Text = "Индекс Девеса-Болдуина";
+            this.DBI_rb.UseVisualStyleBackColor = true;
+            // 
             // TimeCalculationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(308, 176);
+            this.Controls.Add(this.DBI_rb);
             this.Controls.Add(this.Dunn_rb);
             this.Controls.Add(this.Calinski_Harabasz_rb);
             this.Controls.Add(this.Start);
@@ -99,5 +112,6 @@
         private System.Windows.Forms.Button Start;
         private System.Windows.Forms.RadioButton Calinski_Harabasz_rb;
         private System.Windows.Forms.RadioButton Dunn_rb;
+        private System.Windows.Forms.RadioButton DBI_rb;
     }
 }

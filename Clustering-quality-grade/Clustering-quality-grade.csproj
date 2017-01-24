@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calinski_Harabasz_criterion.cs" />
+    <Compile Include="Davies_Bouldin_index.cs" />
     <Compile Include="Dunn_index.cs" />
     <Compile Include="F1_meassure.cs" />
     <Compile Include="MainForm.cs">

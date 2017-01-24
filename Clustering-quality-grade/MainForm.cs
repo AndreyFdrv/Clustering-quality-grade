@@ -159,6 +159,8 @@ namespace Clustering_quality_grade
             output += "Критерий Calinski Harabasz: " + CHC.compute_criterion() + "\r\n";
             Dunn_index dunn = new Dunn_index(points);
             output += "Индекс Данна: " + dunn.compute() + "\r\n";
+            Davies_Bouldin_index DBI= new Davies_Bouldin_index(points);
+            output += "Индекс Девиса-Болдуина: " + DBI.compute() + "\r\n";
             MessageBox.Show(output);
         }
 
