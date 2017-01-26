@@ -161,6 +161,8 @@ namespace Clustering_quality_grade
             output += "Индекс Данна: " + dunn.compute() + "\r\n";
             Davies_Bouldin_index DBI= new Davies_Bouldin_index(points);
             output += "Индекс Девиса-Болдуина: " + DBI.compute() + "\r\n";
+            Scatter_Distance_index SD = new Scatter_Distance_index(points);
+            output += "Индекс Scatter-Distance: " + SD.compute(1) + "\r\n";
             MessageBox.Show(output);
         }
 

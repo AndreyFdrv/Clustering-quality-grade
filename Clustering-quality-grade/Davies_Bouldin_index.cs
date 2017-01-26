@@ -15,6 +15,12 @@ namespace Clustering_quality_grade
         }
         private ArrayList cluster_center(int cluster_number)
         {
+            int cluster_size = 0;
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (((Point)objects[i]).cluster_number == cluster_number)
+                    cluster_size++;
+            }
             ArrayList center_coordinates = new ArrayList();
             int dimension = ((Point)objects[0]).coordinates.Count;
             for(int i=0; i<dimension; i++)
@@ -25,7 +31,7 @@ namespace Clustering_quality_grade
                     if (((Point)objects[j]).cluster_number==cluster_number)
                         sum += (int)((Point)objects[j]).coordinates[i];
                 }
-                center_coordinates.Add(sum / objects.Count);
+                center_coordinates.Add(sum / cluster_size);
             }
             return center_coordinates;
         }

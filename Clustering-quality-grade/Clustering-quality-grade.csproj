@@ -58,6 +58,7 @@
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scatter_Distance_index.cs" />
     <Compile Include="TimeCalculationForm.cs">
       <SubType>Form</SubType>
     </Compile>

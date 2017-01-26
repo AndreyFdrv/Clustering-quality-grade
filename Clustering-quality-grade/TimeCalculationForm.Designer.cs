@@ -86,7 +86,7 @@
             this.DBI_rb.Size = new System.Drawing.Size(156, 17);
             this.DBI_rb.TabIndex = 4;
             this.DBI_rb.TabStop = true;
-            this.DBI_rb.Text = "Индекс Девеса-Болдуина";
+            this.DBI_rb.Text = "Индекс Девиса-Болдуина";
             this.DBI_rb.UseVisualStyleBackColor = true;
             // 
             // TimeCalculationForm
