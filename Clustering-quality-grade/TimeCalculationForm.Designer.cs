@@ -33,6 +33,9 @@
             this.Calinski_Harabasz_rb = new System.Windows.Forms.RadioButton();
             this.Dunn_rb = new System.Windows.Forms.RadioButton();
             this.DBI_rb = new System.Windows.Forms.RadioButton();
+            this.Scatter_Distance_rb = new System.Windows.Forms.RadioButton();
+            this.Scatter_Density_rb = new System.Windows.Forms.RadioButton();
+            this.RMSSTD_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // F1_meassure_rb
@@ -48,7 +51,7 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(12, 141);
+            this.Start.Location = new System.Drawing.Point(12, 179);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(75, 23);
             this.Start.TabIndex = 1;
@@ -89,11 +92,47 @@
             this.DBI_rb.Text = "Индекс Девиса-Болдуина";
             this.DBI_rb.UseVisualStyleBackColor = true;
             // 
+            // Scatter_Distance_rb
+            // 
+            this.Scatter_Distance_rb.AutoSize = true;
+            this.Scatter_Distance_rb.Location = new System.Drawing.Point(12, 104);
+            this.Scatter_Distance_rb.Name = "Scatter_Distance_rb";
+            this.Scatter_Distance_rb.Size = new System.Drawing.Size(145, 17);
+            this.Scatter_Distance_rb.TabIndex = 5;
+            this.Scatter_Distance_rb.TabStop = true;
+            this.Scatter_Distance_rb.Text = "Индекс Scatter-Distance";
+            this.Scatter_Distance_rb.UseVisualStyleBackColor = true;
+            // 
+            // Scatter_Density_rb
+            // 
+            this.Scatter_Density_rb.AutoSize = true;
+            this.Scatter_Density_rb.Location = new System.Drawing.Point(12, 127);
+            this.Scatter_Density_rb.Name = "Scatter_Density_rb";
+            this.Scatter_Density_rb.Size = new System.Drawing.Size(138, 17);
+            this.Scatter_Density_rb.TabIndex = 6;
+            this.Scatter_Density_rb.TabStop = true;
+            this.Scatter_Density_rb.Text = "Индекс Scatter-Density";
+            this.Scatter_Density_rb.UseVisualStyleBackColor = true;
+            // 
+            // RMSSTD_rb
+            // 
+            this.RMSSTD_rb.AutoSize = true;
+            this.RMSSTD_rb.Location = new System.Drawing.Point(12, 150);
+            this.RMSSTD_rb.Name = "RMSSTD_rb";
+            this.RMSSTD_rb.Size = new System.Drawing.Size(112, 17);
+            this.RMSSTD_rb.TabIndex = 7;
+            this.RMSSTD_rb.TabStop = true;
+            this.RMSSTD_rb.Text = "Индекс RMSSTD";
+            this.RMSSTD_rb.UseVisualStyleBackColor = true;
+            // 
             // TimeCalculationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(308, 176);
+            this.ClientSize = new System.Drawing.Size(308, 214);
+            this.Controls.Add(this.RMSSTD_rb);
+            this.Controls.Add(this.Scatter_Density_rb);
+            this.Controls.Add(this.Scatter_Distance_rb);
             this.Controls.Add(this.DBI_rb);
             this.Controls.Add(this.Dunn_rb);
             this.Controls.Add(this.Calinski_Harabasz_rb);
@@ -113,5 +152,8 @@
         private System.Windows.Forms.RadioButton Calinski_Harabasz_rb;
         private System.Windows.Forms.RadioButton Dunn_rb;
         private System.Windows.Forms.RadioButton DBI_rb;
+        private System.Windows.Forms.RadioButton Scatter_Distance_rb;
+        private System.Windows.Forms.RadioButton Scatter_Density_rb;
+        private System.Windows.Forms.RadioButton RMSSTD_rb;
     }
 }
