@@ -34,6 +34,8 @@
             this.LowQualityButton = new System.Windows.Forms.Button();
             this.QualityGradeButton = new System.Windows.Forms.Button();
             this.TimeCalculationButton = new System.Windows.Forms.Button();
+            this.boundary_big = new System.Windows.Forms.Button();
+            this.boundary_small = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,7 +81,7 @@
             // 
             // QualityGradeButton
             // 
-            this.QualityGradeButton.Location = new System.Drawing.Point(535, 180);
+            this.QualityGradeButton.Location = new System.Drawing.Point(535, 300);
             this.QualityGradeButton.Name = "QualityGradeButton";
             this.QualityGradeButton.Size = new System.Drawing.Size(139, 47);
             this.QualityGradeButton.TabIndex = 5;
@@ -89,7 +91,7 @@
             // 
             // TimeCalculationButton
             // 
-            this.TimeCalculationButton.Location = new System.Drawing.Point(535, 233);
+            this.TimeCalculationButton.Location = new System.Drawing.Point(535, 353);
             this.TimeCalculationButton.Name = "TimeCalculationButton";
             this.TimeCalculationButton.Size = new System.Drawing.Size(139, 47);
             this.TimeCalculationButton.TabIndex = 6;
@@ -97,11 +99,33 @@
             this.TimeCalculationButton.UseVisualStyleBackColor = true;
             this.TimeCalculationButton.Click += new System.EventHandler(this.TimeCalculationButton_Click);
             // 
+            // boundary_big
+            // 
+            this.boundary_big.Location = new System.Drawing.Point(535, 233);
+            this.boundary_big.Name = "boundary_big";
+            this.boundary_big.Size = new System.Drawing.Size(139, 47);
+            this.boundary_big.TabIndex = 8;
+            this.boundary_big.Text = "Граничнй случай(большой радиус)";
+            this.boundary_big.UseVisualStyleBackColor = true;
+            this.boundary_big.Click += new System.EventHandler(this.boundary_big_Click);
+            // 
+            // boundary_small
+            // 
+            this.boundary_small.Location = new System.Drawing.Point(535, 180);
+            this.boundary_small.Name = "boundary_small";
+            this.boundary_small.Size = new System.Drawing.Size(139, 47);
+            this.boundary_small.TabIndex = 7;
+            this.boundary_small.Text = "Граничный случай(малый радиус)";
+            this.boundary_small.UseVisualStyleBackColor = true;
+            this.boundary_small.Click += new System.EventHandler(this.boundary_small_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(682, 541);
+            this.Controls.Add(this.boundary_big);
+            this.Controls.Add(this.boundary_small);
             this.Controls.Add(this.TimeCalculationButton);
             this.Controls.Add(this.QualityGradeButton);
             this.Controls.Add(this.LowQualityButton);
@@ -122,5 +146,7 @@
         private System.Windows.Forms.Button LowQualityButton;
         private System.Windows.Forms.Button QualityGradeButton;
         private System.Windows.Forms.Button TimeCalculationButton;
+        private System.Windows.Forms.Button boundary_big;
+        private System.Windows.Forms.Button boundary_small;
     }
 }

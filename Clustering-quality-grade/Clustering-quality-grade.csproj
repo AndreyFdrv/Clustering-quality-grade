@@ -58,6 +58,7 @@
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rand_Jaccard_FM.cs" />
     <Compile Include="RMSSTD.cs" />
     <Compile Include="Scatter_Density_index.cs" />
     <Compile Include="Scatter_Distance_index.cs" />

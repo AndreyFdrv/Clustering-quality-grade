@@ -15,7 +15,7 @@ namespace Clustering_quality_grade
     {
         ArrayList points=new ArrayList();
         const int point_radius = 3;
-        const int cluster_size = 10;
+        int cluster_size = 10;
         Random rand = new Random();
         Bitmap bitmap;
         Graphics gr;
@@ -70,6 +70,7 @@ namespace Clustering_quality_grade
         }
         private void HighQualityButton_Click(object sender, EventArgs e)
         {
+            cluster_size = 10;
             points.Clear();
             gr.Clear(Color.White);
             SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
@@ -94,6 +95,7 @@ namespace Clustering_quality_grade
         }
         private void MiddleQualityButton_Click(object sender, EventArgs e)
         {
+            cluster_size = 10;
             points.Clear();
             gr.Clear(Color.White);
             SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
@@ -118,6 +120,7 @@ namespace Clustering_quality_grade
 
         private void LowQualityButton_Click(object sender, EventArgs e)
         {
+            cluster_size = 10;
             points.Clear();
             gr.Clear(Color.White);
             int radius = rand.Next(20, 60);
@@ -137,24 +140,34 @@ namespace Clustering_quality_grade
             CreateRandomizedCluster(p3, radius);
             pictureBox.Image = bitmap;
         }
-        double ComputeF1_meassure()
+        private ArrayList CreateClusterInfo()
         {
-            ArrayList ClusterInfo=new ArrayList();
+            ArrayList ClusterInfo = new ArrayList();
             for (int i = 0; i < points.Count; i++)
                 ClusterInfo.Add(((Point)points[i]).cluster_number);
+            return ClusterInfo;
+        }
+        private ArrayList CreateClassInfo()
+        {
             ArrayList ClassInfo = new ArrayList();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < cluster_size; i++)
                 ClassInfo.Add(1);
-            for (int i = 10; i < 20; i++)
+            for (int i = cluster_size; i < 2 * cluster_size; i++)
                 ClassInfo.Add(2);
-            for (int i = 20; i < 30; i++)
+            for (int i = 2 * cluster_size; i < 3 * cluster_size; i++)
                 ClassInfo.Add(3);
-            F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
-            return f1_meassure.F1();
+            return ClassInfo;
         }
         private void QualityGradeButton_Click(object sender, EventArgs e)
         {
-            String output = "F1-мера: " + ComputeF1_meassure()+"\r\n";
+            ArrayList ClusterInfo = CreateClusterInfo();
+            ArrayList ClassInfo = CreateClassInfo();
+            F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
+            String output = "F1-мера: " + f1_meassure.F1() + "\r\n";
+            Rand_Jaccard_FM rand_jaccard_fm = new Rand_Jaccard_FM(ClusterInfo, ClassInfo);
+            output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
+            output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
+            output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
             Calinski_Harabasz_criterion CHC = new Calinski_Harabasz_criterion(points);
             output += "Критерий Calinski Harabasz: " + CHC.compute_criterion() + "\r\n";
             Dunn_index dunn = new Dunn_index(points);
@@ -174,6 +187,38 @@ namespace Clustering_quality_grade
         {
             TimeCalculationForm form = new TimeCalculationForm();
             form.ShowDialog();
+        }
+        private void generate_boundary(int radius)
+        {
+            points.Clear();
+            gr.Clear(Color.White);
+            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
+            int x = radius;
+            int y = radius;
+            Point p1 = new Point(x, y);
+            CreateCluster(p1, radius, myBrush);
+            x = 3 * radius;
+            y = radius;
+            Point p2 = new Point(x, y);
+            myBrush.Color = Color.Green;
+            CreateCluster(p2, radius, myBrush);
+            x = 2*radius;
+            y = radius+(int)(2*(double)radius*Math.Sin(Math.PI/3));
+            Point p3 = new Point(x, y);
+            myBrush.Color = Color.Blue;
+            CreateCluster(p3, radius, myBrush);
+            pictureBox.Image = bitmap;
+        }
+        private void boundary_small_Click(object sender, EventArgs e)
+        {
+            cluster_size = 100;
+            generate_boundary(20);
+        }
+
+        private void boundary_big_Click(object sender, EventArgs e)
+        {
+            cluster_size = 100;
+            generate_boundary(100);
         }
     }
 }

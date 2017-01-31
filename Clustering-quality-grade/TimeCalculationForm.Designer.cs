@@ -36,6 +36,9 @@
             this.Scatter_Distance_rb = new System.Windows.Forms.RadioButton();
             this.Scatter_Density_rb = new System.Windows.Forms.RadioButton();
             this.RMSSTD_rb = new System.Windows.Forms.RadioButton();
+            this.rand_rb = new System.Windows.Forms.RadioButton();
+            this.jaccard_rb = new System.Windows.Forms.RadioButton();
+            this.FM_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // F1_meassure_rb
@@ -51,7 +54,7 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(12, 179);
+            this.Start.Location = new System.Drawing.Point(12, 261);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(75, 23);
             this.Start.TabIndex = 1;
@@ -62,7 +65,7 @@
             // Calinski_Harabasz_rb
             // 
             this.Calinski_Harabasz_rb.AutoSize = true;
-            this.Calinski_Harabasz_rb.Location = new System.Drawing.Point(12, 35);
+            this.Calinski_Harabasz_rb.Location = new System.Drawing.Point(12, 104);
             this.Calinski_Harabasz_rb.Name = "Calinski_Harabasz_rb";
             this.Calinski_Harabasz_rb.Size = new System.Drawing.Size(160, 17);
             this.Calinski_Harabasz_rb.TabIndex = 2;
@@ -73,7 +76,7 @@
             // Dunn_rb
             // 
             this.Dunn_rb.AutoSize = true;
-            this.Dunn_rb.Location = new System.Drawing.Point(12, 58);
+            this.Dunn_rb.Location = new System.Drawing.Point(12, 127);
             this.Dunn_rb.Name = "Dunn_rb";
             this.Dunn_rb.Size = new System.Drawing.Size(99, 17);
             this.Dunn_rb.TabIndex = 3;
@@ -84,7 +87,7 @@
             // DBI_rb
             // 
             this.DBI_rb.AutoSize = true;
-            this.DBI_rb.Location = new System.Drawing.Point(12, 81);
+            this.DBI_rb.Location = new System.Drawing.Point(12, 150);
             this.DBI_rb.Name = "DBI_rb";
             this.DBI_rb.Size = new System.Drawing.Size(156, 17);
             this.DBI_rb.TabIndex = 4;
@@ -95,7 +98,7 @@
             // Scatter_Distance_rb
             // 
             this.Scatter_Distance_rb.AutoSize = true;
-            this.Scatter_Distance_rb.Location = new System.Drawing.Point(12, 104);
+            this.Scatter_Distance_rb.Location = new System.Drawing.Point(12, 173);
             this.Scatter_Distance_rb.Name = "Scatter_Distance_rb";
             this.Scatter_Distance_rb.Size = new System.Drawing.Size(145, 17);
             this.Scatter_Distance_rb.TabIndex = 5;
@@ -106,7 +109,7 @@
             // Scatter_Density_rb
             // 
             this.Scatter_Density_rb.AutoSize = true;
-            this.Scatter_Density_rb.Location = new System.Drawing.Point(12, 127);
+            this.Scatter_Density_rb.Location = new System.Drawing.Point(12, 196);
             this.Scatter_Density_rb.Name = "Scatter_Density_rb";
             this.Scatter_Density_rb.Size = new System.Drawing.Size(138, 17);
             this.Scatter_Density_rb.TabIndex = 6;
@@ -117,7 +120,7 @@
             // RMSSTD_rb
             // 
             this.RMSSTD_rb.AutoSize = true;
-            this.RMSSTD_rb.Location = new System.Drawing.Point(12, 150);
+            this.RMSSTD_rb.Location = new System.Drawing.Point(12, 219);
             this.RMSSTD_rb.Name = "RMSSTD_rb";
             this.RMSSTD_rb.Size = new System.Drawing.Size(112, 17);
             this.RMSSTD_rb.TabIndex = 7;
@@ -125,11 +128,47 @@
             this.RMSSTD_rb.Text = "Индекс RMSSTD";
             this.RMSSTD_rb.UseVisualStyleBackColor = true;
             // 
+            // rand_rb
+            // 
+            this.rand_rb.AutoSize = true;
+            this.rand_rb.Location = new System.Drawing.Point(12, 35);
+            this.rand_rb.Name = "rand_rb";
+            this.rand_rb.Size = new System.Drawing.Size(92, 17);
+            this.rand_rb.TabIndex = 8;
+            this.rand_rb.TabStop = true;
+            this.rand_rb.Text = "Индекс Rand";
+            this.rand_rb.UseVisualStyleBackColor = true;
+            // 
+            // jaccard_rb
+            // 
+            this.jaccard_rb.AutoSize = true;
+            this.jaccard_rb.Location = new System.Drawing.Point(12, 58);
+            this.jaccard_rb.Name = "jaccard_rb";
+            this.jaccard_rb.Size = new System.Drawing.Size(104, 17);
+            this.jaccard_rb.TabIndex = 9;
+            this.jaccard_rb.TabStop = true;
+            this.jaccard_rb.Text = "Индекс Jaccard";
+            this.jaccard_rb.UseVisualStyleBackColor = true;
+            // 
+            // FM_rb
+            // 
+            this.FM_rb.AutoSize = true;
+            this.FM_rb.Location = new System.Drawing.Point(12, 81);
+            this.FM_rb.Name = "FM_rb";
+            this.FM_rb.Size = new System.Drawing.Size(81, 17);
+            this.FM_rb.TabIndex = 10;
+            this.FM_rb.TabStop = true;
+            this.FM_rb.Text = "Индекс FM";
+            this.FM_rb.UseVisualStyleBackColor = true;
+            // 
             // TimeCalculationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(308, 214);
+            this.ClientSize = new System.Drawing.Size(365, 299);
+            this.Controls.Add(this.FM_rb);
+            this.Controls.Add(this.jaccard_rb);
+            this.Controls.Add(this.rand_rb);
             this.Controls.Add(this.RMSSTD_rb);
             this.Controls.Add(this.Scatter_Density_rb);
             this.Controls.Add(this.Scatter_Distance_rb);
@@ -155,5 +194,8 @@
         private System.Windows.Forms.RadioButton Scatter_Distance_rb;
         private System.Windows.Forms.RadioButton Scatter_Density_rb;
         private System.Windows.Forms.RadioButton RMSSTD_rb;
+        private System.Windows.Forms.RadioButton rand_rb;
+        private System.Windows.Forms.RadioButton jaccard_rb;
+        private System.Windows.Forms.RadioButton FM_rb;
     }
 }
