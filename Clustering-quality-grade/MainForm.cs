@@ -180,6 +180,12 @@ namespace Clustering_quality_grade
             output += "Индекс Scatter-Density: " + Scatter_Density.compute() + "\r\n";
             RMSSTD rmsstd = new RMSSTD(points);
             output += "Индекс RMSSTD: " + rmsstd.compute() + "\r\n";
+            Hubert_Gamma_Statistic hubert = new Hubert_Gamma_Statistic(points);
+            output += "Huberts's Г статистика: " + hubert.compute() + "\r\n";
+            Modified_Hubert_Gamma_Statistic modified_hubert = new Modified_Hubert_Gamma_Statistic(points);
+            output += "Модифицированная Huberts's Г статистика: " + modified_hubert.compute() + "\r\n";
+            Normalized_Hubert_Gamma_Statistic normalized_hubert = new Normalized_Hubert_Gamma_Statistic(points);
+            output += "Нормализованная Huberts's Г статистика: " + normalized_hubert.compute() + "\r\n";
             MessageBox.Show(output);
         }
 
@@ -197,7 +203,7 @@ namespace Clustering_quality_grade
             int y = radius;
             Point p1 = new Point(x, y);
             CreateCluster(p1, radius, myBrush);
-            x = 3 * radius;
+            x = 3 *radius;
             y = radius;
             Point p2 = new Point(x, y);
             myBrush.Color = Color.Green;

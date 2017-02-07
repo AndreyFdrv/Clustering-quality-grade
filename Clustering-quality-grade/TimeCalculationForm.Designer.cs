@@ -39,6 +39,8 @@
             this.rand_rb = new System.Windows.Forms.RadioButton();
             this.jaccard_rb = new System.Windows.Forms.RadioButton();
             this.FM_rb = new System.Windows.Forms.RadioButton();
+            this.hubert_rb = new System.Windows.Forms.RadioButton();
+            this.modified_hubert_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // F1_meassure_rb
@@ -54,7 +56,7 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(12, 261);
+            this.Start.Location = new System.Drawing.Point(12, 291);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(75, 23);
             this.Start.TabIndex = 1;
@@ -161,11 +163,35 @@
             this.FM_rb.Text = "Индекс FM";
             this.FM_rb.UseVisualStyleBackColor = true;
             // 
+            // hubert_rb
+            // 
+            this.hubert_rb.AutoSize = true;
+            this.hubert_rb.Location = new System.Drawing.Point(12, 242);
+            this.hubert_rb.Name = "hubert_rb";
+            this.hubert_rb.Size = new System.Drawing.Size(133, 17);
+            this.hubert_rb.TabIndex = 11;
+            this.hubert_rb.TabStop = true;
+            this.hubert_rb.Text = "Hubert\'s Г статистика";
+            this.hubert_rb.UseVisualStyleBackColor = true;
+            // 
+            // modified_hubert_rb
+            // 
+            this.modified_hubert_rb.AutoSize = true;
+            this.modified_hubert_rb.Location = new System.Drawing.Point(12, 265);
+            this.modified_hubert_rb.Name = "modified_hubert_rb";
+            this.modified_hubert_rb.Size = new System.Drawing.Size(237, 17);
+            this.modified_hubert_rb.TabIndex = 12;
+            this.modified_hubert_rb.TabStop = true;
+            this.modified_hubert_rb.Text = "Модифицированная Hubert\'s Г статистика";
+            this.modified_hubert_rb.UseVisualStyleBackColor = true;
+            // 
             // TimeCalculationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(365, 299);
+            this.ClientSize = new System.Drawing.Size(365, 326);
+            this.Controls.Add(this.modified_hubert_rb);
+            this.Controls.Add(this.hubert_rb);
             this.Controls.Add(this.FM_rb);
             this.Controls.Add(this.jaccard_rb);
             this.Controls.Add(this.rand_rb);
@@ -197,5 +223,7 @@
         private System.Windows.Forms.RadioButton rand_rb;
         private System.Windows.Forms.RadioButton jaccard_rb;
         private System.Windows.Forms.RadioButton FM_rb;
+        private System.Windows.Forms.RadioButton hubert_rb;
+        private System.Windows.Forms.RadioButton modified_hubert_rb;
     }
 }
