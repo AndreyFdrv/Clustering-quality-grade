@@ -186,6 +186,8 @@ namespace Clustering_quality_grade
             output += "Модифицированная Huberts's Г статистика: " + modified_hubert.compute() + "\r\n";
             Normalized_Hubert_Gamma_Statistic normalized_hubert = new Normalized_Hubert_Gamma_Statistic(points);
             output += "Нормализованная Huberts's Г статистика: " + normalized_hubert.compute() + "\r\n";
+            RS_Index rs_index = new RS_Index(points);
+            output += "RS индекс: " + rs_index.compute() + "\r\n";
             MessageBox.Show(output);
         }
 

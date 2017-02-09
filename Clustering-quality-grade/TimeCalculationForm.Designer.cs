@@ -41,6 +41,8 @@
             this.FM_rb = new System.Windows.Forms.RadioButton();
             this.hubert_rb = new System.Windows.Forms.RadioButton();
             this.modified_hubert_rb = new System.Windows.Forms.RadioButton();
+            this.normalized_hubert_rb = new System.Windows.Forms.RadioButton();
+            this.RS_index_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // F1_meassure_rb
@@ -56,7 +58,7 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(12, 291);
+            this.Start.Location = new System.Drawing.Point(12, 334);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(75, 23);
             this.Start.TabIndex = 1;
@@ -185,11 +187,35 @@
             this.modified_hubert_rb.Text = "Модифицированная Hubert\'s Г статистика";
             this.modified_hubert_rb.UseVisualStyleBackColor = true;
             // 
+            // normalized_hubert_rb
+            // 
+            this.normalized_hubert_rb.AutoSize = true;
+            this.normalized_hubert_rb.Location = new System.Drawing.Point(12, 288);
+            this.normalized_hubert_rb.Name = "normalized_hubert_rb";
+            this.normalized_hubert_rb.Size = new System.Drawing.Size(230, 17);
+            this.normalized_hubert_rb.TabIndex = 13;
+            this.normalized_hubert_rb.TabStop = true;
+            this.normalized_hubert_rb.Text = "Нормализованная Hubert\'s Г статистика";
+            this.normalized_hubert_rb.UseVisualStyleBackColor = true;
+            // 
+            // RS_index_rb
+            // 
+            this.RS_index_rb.AutoSize = true;
+            this.RS_index_rb.Location = new System.Drawing.Point(12, 311);
+            this.RS_index_rb.Name = "RS_index_rb";
+            this.RS_index_rb.Size = new System.Drawing.Size(81, 17);
+            this.RS_index_rb.TabIndex = 14;
+            this.RS_index_rb.TabStop = true;
+            this.RS_index_rb.Text = "Индекс RS";
+            this.RS_index_rb.UseVisualStyleBackColor = true;
+            // 
             // TimeCalculationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(365, 326);
+            this.ClientSize = new System.Drawing.Size(440, 367);
+            this.Controls.Add(this.RS_index_rb);
+            this.Controls.Add(this.normalized_hubert_rb);
             this.Controls.Add(this.modified_hubert_rb);
             this.Controls.Add(this.hubert_rb);
             this.Controls.Add(this.FM_rb);
@@ -225,5 +251,7 @@
         private System.Windows.Forms.RadioButton FM_rb;
         private System.Windows.Forms.RadioButton hubert_rb;
         private System.Windows.Forms.RadioButton modified_hubert_rb;
+        private System.Windows.Forms.RadioButton normalized_hubert_rb;
+        private System.Windows.Forms.RadioButton RS_index_rb;
     }
 }
