@@ -66,6 +66,7 @@
     <Compile Include="RMSSTD.cs" />
     <Compile Include="Scatter_Density_index.cs" />
     <Compile Include="Scatter_Distance_index.cs" />
+    <Compile Include="SilhouetteIndex.cs" />
     <Compile Include="TimeCalculationForm.cs">
       <SubType>Form</SubType>
     </Compile>

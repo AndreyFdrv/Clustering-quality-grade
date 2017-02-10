@@ -188,6 +188,8 @@ namespace Clustering_quality_grade
             output += "Нормализованная Huberts's Г статистика: " + normalized_hubert.compute() + "\r\n";
             RS_Index rs_index = new RS_Index(points);
             output += "RS индекс: " + rs_index.compute() + "\r\n";
+            SilhouetteIndex silhouette_index = new SilhouetteIndex(points);
+            output += "Индекс Силуэта: " + silhouette_index.compute() + "\r\n";
             MessageBox.Show(output);
         }
 

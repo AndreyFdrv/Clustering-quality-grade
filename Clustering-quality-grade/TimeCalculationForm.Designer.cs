@@ -43,6 +43,7 @@
             this.modified_hubert_rb = new System.Windows.Forms.RadioButton();
             this.normalized_hubert_rb = new System.Windows.Forms.RadioButton();
             this.RS_index_rb = new System.Windows.Forms.RadioButton();
+            this.Silhouette_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // F1_meassure_rb
@@ -58,7 +59,7 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(12, 334);
+            this.Start.Location = new System.Drawing.Point(12, 384);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(75, 23);
             this.Start.TabIndex = 1;
@@ -209,11 +210,23 @@
             this.RS_index_rb.Text = "Индекс RS";
             this.RS_index_rb.UseVisualStyleBackColor = true;
             // 
+            // Silhouette_rb
+            // 
+            this.Silhouette_rb.AutoSize = true;
+            this.Silhouette_rb.Location = new System.Drawing.Point(12, 334);
+            this.Silhouette_rb.Name = "Silhouette_rb";
+            this.Silhouette_rb.Size = new System.Drawing.Size(107, 17);
+            this.Silhouette_rb.TabIndex = 15;
+            this.Silhouette_rb.TabStop = true;
+            this.Silhouette_rb.Text = "Индекс Силуэта";
+            this.Silhouette_rb.UseVisualStyleBackColor = true;
+            // 
             // TimeCalculationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(440, 367);
+            this.ClientSize = new System.Drawing.Size(440, 419);
+            this.Controls.Add(this.Silhouette_rb);
             this.Controls.Add(this.RS_index_rb);
             this.Controls.Add(this.normalized_hubert_rb);
             this.Controls.Add(this.modified_hubert_rb);
@@ -253,5 +266,6 @@
         private System.Windows.Forms.RadioButton modified_hubert_rb;
         private System.Windows.Forms.RadioButton normalized_hubert_rb;
         private System.Windows.Forms.RadioButton RS_index_rb;
+        private System.Windows.Forms.RadioButton Silhouette_rb;
     }
 }
