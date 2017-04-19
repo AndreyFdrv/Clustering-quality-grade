@@ -36,12 +36,14 @@
             this.TimeCalculationButton = new System.Windows.Forms.Button();
             this.boundary_big = new System.Windows.Forms.Button();
             this.boundary_small = new System.Windows.Forms.Button();
+            this.clustering_button = new System.Windows.Forms.Button();
+            this.Non_clustered_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // HighQualityButton
             // 
-            this.HighQualityButton.Location = new System.Drawing.Point(535, 12);
+            this.HighQualityButton.Location = new System.Drawing.Point(567, 12);
             this.HighQualityButton.Name = "HighQualityButton";
             this.HighQualityButton.Size = new System.Drawing.Size(139, 47);
             this.HighQualityButton.TabIndex = 0;
@@ -55,13 +57,13 @@
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox.Location = new System.Drawing.Point(12, 12);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(517, 517);
+            this.pictureBox.Size = new System.Drawing.Size(549, 551);
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
             // 
             // MiddleQualityButton
             // 
-            this.MiddleQualityButton.Location = new System.Drawing.Point(535, 65);
+            this.MiddleQualityButton.Location = new System.Drawing.Point(567, 65);
             this.MiddleQualityButton.Name = "MiddleQualityButton";
             this.MiddleQualityButton.Size = new System.Drawing.Size(139, 47);
             this.MiddleQualityButton.TabIndex = 3;
@@ -71,7 +73,7 @@
             // 
             // LowQualityButton
             // 
-            this.LowQualityButton.Location = new System.Drawing.Point(535, 118);
+            this.LowQualityButton.Location = new System.Drawing.Point(567, 118);
             this.LowQualityButton.Name = "LowQualityButton";
             this.LowQualityButton.Size = new System.Drawing.Size(139, 47);
             this.LowQualityButton.TabIndex = 4;
@@ -81,7 +83,7 @@
             // 
             // QualityGradeButton
             // 
-            this.QualityGradeButton.Location = new System.Drawing.Point(535, 300);
+            this.QualityGradeButton.Location = new System.Drawing.Point(567, 463);
             this.QualityGradeButton.Name = "QualityGradeButton";
             this.QualityGradeButton.Size = new System.Drawing.Size(139, 47);
             this.QualityGradeButton.TabIndex = 5;
@@ -91,7 +93,7 @@
             // 
             // TimeCalculationButton
             // 
-            this.TimeCalculationButton.Location = new System.Drawing.Point(535, 353);
+            this.TimeCalculationButton.Location = new System.Drawing.Point(567, 516);
             this.TimeCalculationButton.Name = "TimeCalculationButton";
             this.TimeCalculationButton.Size = new System.Drawing.Size(139, 47);
             this.TimeCalculationButton.TabIndex = 6;
@@ -101,7 +103,7 @@
             // 
             // boundary_big
             // 
-            this.boundary_big.Location = new System.Drawing.Point(535, 233);
+            this.boundary_big.Location = new System.Drawing.Point(567, 236);
             this.boundary_big.Name = "boundary_big";
             this.boundary_big.Size = new System.Drawing.Size(139, 47);
             this.boundary_big.TabIndex = 8;
@@ -111,7 +113,7 @@
             // 
             // boundary_small
             // 
-            this.boundary_small.Location = new System.Drawing.Point(535, 180);
+            this.boundary_small.Location = new System.Drawing.Point(567, 183);
             this.boundary_small.Name = "boundary_small";
             this.boundary_small.Size = new System.Drawing.Size(139, 47);
             this.boundary_small.TabIndex = 7;
@@ -119,11 +121,33 @@
             this.boundary_small.UseVisualStyleBackColor = true;
             this.boundary_small.Click += new System.EventHandler(this.boundary_small_Click);
             // 
+            // clustering_button
+            // 
+            this.clustering_button.Location = new System.Drawing.Point(567, 359);
+            this.clustering_button.Name = "clustering_button";
+            this.clustering_button.Size = new System.Drawing.Size(139, 47);
+            this.clustering_button.TabIndex = 10;
+            this.clustering_button.Text = "Применить алгоритм кластеризации";
+            this.clustering_button.UseVisualStyleBackColor = true;
+            this.clustering_button.Click += new System.EventHandler(this.EM_clustering_button_Click);
+            // 
+            // Non_clustered_button
+            // 
+            this.Non_clustered_button.Location = new System.Drawing.Point(567, 306);
+            this.Non_clustered_button.Name = "Non_clustered_button";
+            this.Non_clustered_button.Size = new System.Drawing.Size(139, 47);
+            this.Non_clustered_button.TabIndex = 9;
+            this.Non_clustered_button.Text = "Некластеризованное множество";
+            this.Non_clustered_button.UseVisualStyleBackColor = true;
+            this.Non_clustered_button.Click += new System.EventHandler(this.Non_clustered_button_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 541);
+            this.ClientSize = new System.Drawing.Size(717, 575);
+            this.Controls.Add(this.clustering_button);
+            this.Controls.Add(this.Non_clustered_button);
             this.Controls.Add(this.boundary_big);
             this.Controls.Add(this.boundary_small);
             this.Controls.Add(this.TimeCalculationButton);
@@ -148,5 +172,7 @@
         private System.Windows.Forms.Button TimeCalculationButton;
         private System.Windows.Forms.Button boundary_big;
         private System.Windows.Forms.Button boundary_small;
+        private System.Windows.Forms.Button clustering_button;
+        private System.Windows.Forms.Button Non_clustered_button;
     }
 }

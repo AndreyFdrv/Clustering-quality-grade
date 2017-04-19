@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
-
+using System.IO;
 namespace Clustering_quality_grade
 {
     public partial class MainForm : Form
@@ -42,6 +42,22 @@ namespace Clustering_quality_grade
                     point.cluster_number = 2;
                 else
                     point.cluster_number = 3;
+                points.Add(point);
+            }
+        }
+        void CreateNormalDistributionCluster(Point center, int radius)
+        {
+            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+            NormalRandom nr = new NormalRandom();
+            for (int i = 0; i < cluster_size; i++)
+            {
+                int dispersion=rand.Next(10, 30);
+                double x = nr.RandomGauss((int)center.coordinates[0], dispersion);
+                dispersion = rand.Next(10, 30);
+                double y = nr.RandomGauss((int)center.coordinates[1], dispersion);
+                gr.FillEllipse(myBrush, new Rectangle((int)x - point_radius, (int)y - point_radius,
+                   2 * point_radius, 2 * point_radius));
+                Point point = new Point((int)x, (int)y);
                 points.Add(point);
             }
         }
@@ -190,6 +206,8 @@ namespace Clustering_quality_grade
             output += "RS индекс: " + rs_index.compute() + "\r\n";
             SilhouetteIndex silhouette_index = new SilhouetteIndex(points);
             output += "Индекс Силуэта: " + silhouette_index.compute() + "\r\n";
+            Maulik_Bandyopadhyay_index maulik_bandyopadhyay_index = new Maulik_Bandyopadhyay_index(points);
+            output += "Индекс Маулика-Бандиопадия: " + maulik_bandyopadhyay_index.compute() + "\r\n";
             MessageBox.Show(output);
         }
 
@@ -229,6 +247,61 @@ namespace Clustering_quality_grade
         {
             cluster_size = 100;
             generate_boundary(100);
+        }
+
+        private void Non_clustered_button_Click(object sender, EventArgs e)
+        {
+            cluster_size = 10;
+            points.Clear();
+            gr.Clear(Color.White);
+            SolidBrush brush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+            int radius = rand.Next(20, 60);
+            int x = rand.Next(radius, pictureBox.Width - radius);
+            int y = rand.Next(radius, pictureBox.Width - radius);
+            Point p1 = new Point(x, y);
+            CreateCluster(p1, radius, brush);
+            radius = rand.Next(20, 60);
+            x = rand.Next(radius, pictureBox.Width - radius);
+            y = rand.Next(radius, pictureBox.Width - radius);
+            Point p2 = new Point(x, y);
+            CreateCluster(p2, radius, brush);
+            radius = rand.Next(20, 60);
+            x = rand.Next(radius, pictureBox.Width - radius);
+            y = rand.Next(radius, pictureBox.Width - radius);
+            Point p3 = new Point(x, y);
+            CreateCluster(p3, radius, brush);
+            pictureBox.Image = bitmap;
+        }
+        private void ColorizeClusters()
+        {
+            gr.Clear(Color.White);
+            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
+            for (int i = 0; i < points.Count; i++)
+            {
+                if(((Point)points[i]).cluster_number==1)
+                    myBrush.Color = Color.Red;
+                else if(((Point)points[i]).cluster_number==2)
+                    myBrush.Color = Color.Green;
+                else if(((Point)points[i]).cluster_number==3)
+                    myBrush.Color = Color.Blue;
+                else
+                    myBrush.Color = Color.Black;
+                int x = (int)((Point)points[i]).coordinates[0];
+                int y = (int)((Point)points[i]).coordinates[1];
+                gr.FillEllipse(myBrush, new Rectangle(x - point_radius, y - point_radius,
+                   2 * point_radius, 2 * point_radius));
+            }
+            pictureBox.Image = bitmap;
+        }
+        private void EM_clustering_button_Click(object sender, EventArgs e)
+        {
+            ClusteringForm form = new ClusteringForm(points);
+            form.ShowDialog();
+            if (form.isClustered)
+            {
+                points = form.getPoints();
+                ColorizeClusters();
+            }
         }
     }
 }

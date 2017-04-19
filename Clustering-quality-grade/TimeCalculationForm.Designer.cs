@@ -44,6 +44,7 @@
             this.normalized_hubert_rb = new System.Windows.Forms.RadioButton();
             this.RS_index_rb = new System.Windows.Forms.RadioButton();
             this.Silhouette_rb = new System.Windows.Forms.RadioButton();
+            this.Maulik_Bandyopadhyay_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // F1_meassure_rb
@@ -221,11 +222,23 @@
             this.Silhouette_rb.Text = "Индекс Силуэта";
             this.Silhouette_rb.UseVisualStyleBackColor = true;
             // 
+            // Maulik_Bandyopadhyay_rb
+            // 
+            this.Maulik_Bandyopadhyay_rb.AutoSize = true;
+            this.Maulik_Bandyopadhyay_rb.Location = new System.Drawing.Point(12, 357);
+            this.Maulik_Bandyopadhyay_rb.Name = "Maulik_Bandyopadhyay_rb";
+            this.Maulik_Bandyopadhyay_rb.Size = new System.Drawing.Size(180, 17);
+            this.Maulik_Bandyopadhyay_rb.TabIndex = 16;
+            this.Maulik_Bandyopadhyay_rb.TabStop = true;
+            this.Maulik_Bandyopadhyay_rb.Text = "Индекс Маулика-Бандиопадия";
+            this.Maulik_Bandyopadhyay_rb.UseVisualStyleBackColor = true;
+            // 
             // TimeCalculationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(440, 419);
+            this.Controls.Add(this.Maulik_Bandyopadhyay_rb);
             this.Controls.Add(this.Silhouette_rb);
             this.Controls.Add(this.RS_index_rb);
             this.Controls.Add(this.normalized_hubert_rb);
@@ -267,5 +280,6 @@
         private System.Windows.Forms.RadioButton normalized_hubert_rb;
         private System.Windows.Forms.RadioButton RS_index_rb;
         private System.Windows.Forms.RadioButton Silhouette_rb;
+        private System.Windows.Forms.RadioButton Maulik_Bandyopadhyay_rb;
     }
 }
