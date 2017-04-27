@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clustering algorithms\EM_Clustering.cs" />
+    <Compile Include="clustering algorithms\K_Means.cs" />
     <Compile Include="NormalRandom.cs" />
     <Compile Include="quality assessment criterions\Calinski_Harabasz_criterion.cs" />
     <Compile Include="quality assessment criterions\Davies_Bouldin_index.cs" />

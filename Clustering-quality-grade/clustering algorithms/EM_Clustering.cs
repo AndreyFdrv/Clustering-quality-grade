@@ -10,13 +10,11 @@ namespace Clustering_quality_grade
     {
         private ArrayList points;
         private int clusters_count;
-        public bool isClustered=false;
         private double log_likelihood_deviation = 0.01;
         private long max_iteration_number = 10000;
         private ArrayList expected_value_matrix = new ArrayList();
         private ArrayList covariance_matrix = new ArrayList();
         private ArrayList weights = new ArrayList();
-        private ArrayList probability_matrix = new ArrayList();
         public EM_Clustering(ArrayList points, int clusters_count=3)
         {
             this.points = points;
@@ -202,12 +200,12 @@ namespace Clustering_quality_grade
             for (int i = 0; i < clusters_count; i++)
                 weights.Add(1.0/clusters_count);
         }
-        private double E(ref ArrayList temp_expected_value_matrix, ref ArrayList temp_covariance_matrix, ref ArrayList temp_weights, ref ArrayList weight_probabilities)
+        private double E(ref ArrayList temp_expected_value_matrix, ref ArrayList temp_covariance_matrix, ref ArrayList temp_weights, ref ArrayList probabilities)
         {
             temp_expected_value_matrix.Clear();
             temp_covariance_matrix.Clear();
             temp_weights.Clear();
-            weight_probabilities.Clear();
+            probabilities.Clear();
             int dimension=((Point)points[0]).coordinates.Count;
             for (int i = 0; i < dimension; i++)
             {
@@ -232,7 +230,6 @@ namespace Clustering_quality_grade
                 temp_weights.Add(row);
             }
             double log_likelihood = 0;
-            probability_matrix.Clear();
             for (int i = 0; i < points.Count; i++)
             {
                 double sum_probability = 0.000001;
@@ -263,11 +260,10 @@ namespace Clustering_quality_grade
                     object_probabilities.Add(probability);
                     sum_probability += probability;
                 }
-                probability_matrix.Add(object_probabilities);
-                ArrayList weight_probabilities_row = new ArrayList();
+                ArrayList probabilities_row = new ArrayList();
                 for (int k = 0; k < clusters_count; k++)
-                    weight_probabilities_row.Add((double)object_probabilities[k] / sum_probability);
-                weight_probabilities.Add(weight_probabilities_row);
+                    probabilities_row.Add((double)object_probabilities[k] / sum_probability);
+                probabilities.Add(probabilities_row);
                 log_likelihood += Math.Log(sum_probability);
                 ArrayList coordinates_matrix=new ArrayList();
                 for(int k=0; k<dimension; k++)
@@ -277,21 +273,21 @@ namespace Clustering_quality_grade
                     coordinates_matrix.Add(row);
                 }
                 ArrayList weight_probabilities_row_matrix=new ArrayList();
-                weight_probabilities_row_matrix.Add(weight_probabilities_row);
+                weight_probabilities_row_matrix.Add(probabilities_row);
                 temp_expected_value_matrix = MatrixAddition(temp_expected_value_matrix, MatrixMultiplication(coordinates_matrix,
                     weight_probabilities_row_matrix));
                 ArrayList weight_probabilities_column_matrix=new ArrayList();
                 for(int k=0; k<clusters_count; k++)
                 {
                     ArrayList row=new ArrayList();
-                    row.Add(weight_probabilities_row[k]);
+                    row.Add(probabilities_row[k]);
                     weight_probabilities_column_matrix.Add(row);
                 }
                 temp_weights = MatrixAddition(temp_weights, weight_probabilities_column_matrix);
             }
             return log_likelihood;
         }
-        private void M(ref ArrayList temp_expected_value_matrix, ref ArrayList temp_covariance_matrix, ref ArrayList temp_weights, ref ArrayList weight_probabilities)
+        private void M(ref ArrayList temp_expected_value_matrix, ref ArrayList temp_covariance_matrix, ref ArrayList temp_weights, ref ArrayList probabilities)
         {
             int dimension = ((Point)points[0]).coordinates.Count;
             for(int i=0; i<clusters_count; i++)
@@ -314,7 +310,7 @@ namespace Clustering_quality_grade
                     matrix3.Add(row3);
                     ArrayList matrix2 = new ArrayList();
                     ArrayList row2 = new ArrayList();
-                    row2.Add(((ArrayList)weight_probabilities[j])[i]);
+                    row2.Add(((ArrayList)probabilities[j])[i]);
                     matrix2.Add(row2);
                     temp_covariance_matrix = MatrixAddition(temp_covariance_matrix, MatrixMultiplication(MatrixMultiplication
                         (matrix1, matrix2), matrix3));
@@ -337,15 +333,15 @@ namespace Clustering_quality_grade
             ArrayList temp_expected_value_matrix=new ArrayList();
             ArrayList temp_covariance_matrix=new ArrayList();
             ArrayList temp_weights=new ArrayList();
-            ArrayList weight_probabilities=new ArrayList();
-            double prev_log_likelihood = E(ref temp_expected_value_matrix, ref temp_covariance_matrix, ref temp_weights, ref weight_probabilities);
-            M(ref temp_expected_value_matrix, ref temp_covariance_matrix, ref temp_weights, ref weight_probabilities);
+            ArrayList probabilities=new ArrayList();
+            double prev_log_likelihood = E(ref temp_expected_value_matrix, ref temp_covariance_matrix, ref temp_weights, ref probabilities);
+            M(ref temp_expected_value_matrix, ref temp_covariance_matrix, ref temp_weights, ref probabilities);
             for(int i=0; i<max_iteration_number-1; i++)
             {
-                double log_likehood = E(ref temp_expected_value_matrix, ref temp_covariance_matrix, ref temp_weights, ref weight_probabilities);
+                double log_likehood = E(ref temp_expected_value_matrix, ref temp_covariance_matrix, ref temp_weights, ref probabilities);
                 double log_likelihood_change = log_likehood-prev_log_likelihood;
                 prev_log_likelihood = log_likehood;
-                M(ref temp_expected_value_matrix, ref temp_covariance_matrix, ref temp_weights, ref weight_probabilities);
+                M(ref temp_expected_value_matrix, ref temp_covariance_matrix, ref temp_weights, ref probabilities);
                 if (Math.Abs(log_likelihood_change) <= log_likelihood_deviation)
                     break;
             }
@@ -356,9 +352,9 @@ namespace Clustering_quality_grade
                 double max_probability = 0;
                 for(int j=0; j<clusters_count; j++)
                 {
-                    if((double)((ArrayList)probability_matrix[i])[j]>max_probability)
+                    if ((double)((ArrayList)probabilities[i])[j] > max_probability)
                     {
-                        max_probability = (double)((ArrayList)probability_matrix[i])[j];
+                        max_probability = (double)((ArrayList)probabilities[i])[j];
                         cluster_number = j + 1;
                     }
                 }

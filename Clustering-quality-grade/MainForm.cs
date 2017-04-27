@@ -40,8 +40,10 @@ namespace Clustering_quality_grade
                     point.cluster_number = 1;
                 else if (myBrush.Color == Color.Green)
                     point.cluster_number = 2;
-                else
+                else if(myBrush.Color==Color.Blue)
                     point.cluster_number = 3;
+                else
+                    point.cluster_number = 0;
                 points.Add(point);
             }
         }
@@ -184,7 +186,7 @@ namespace Clustering_quality_grade
             output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
             output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
             output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
-            Calinski_Harabasz_criterion CHC = new Calinski_Harabasz_criterion(points);
+            /*Calinski_Harabasz_criterion CHC = new Calinski_Harabasz_criterion(points);
             output += "Критерий Calinski Harabasz: " + CHC.compute_criterion() + "\r\n";
             Dunn_index dunn = new Dunn_index(points);
             output += "Индекс Данна: " + dunn.compute() + "\r\n";
@@ -207,7 +209,7 @@ namespace Clustering_quality_grade
             SilhouetteIndex silhouette_index = new SilhouetteIndex(points);
             output += "Индекс Силуэта: " + silhouette_index.compute() + "\r\n";
             Maulik_Bandyopadhyay_index maulik_bandyopadhyay_index = new Maulik_Bandyopadhyay_index(points);
-            output += "Индекс Маулика-Бандиопадия: " + maulik_bandyopadhyay_index.compute() + "\r\n";
+            output += "Индекс Маулика-Бандиопадия: " + maulik_bandyopadhyay_index.compute() + "\r\n";*/
             MessageBox.Show(output);
         }
 
@@ -295,7 +297,7 @@ namespace Clustering_quality_grade
         }
         private void EM_clustering_button_Click(object sender, EventArgs e)
         {
-            ClusteringForm form = new ClusteringForm(points);
+            ClusteringForm form = new ClusteringForm(points, pictureBox.Width, pictureBox.Height);
             form.ShowDialog();
             if (form.isClustered)
             {

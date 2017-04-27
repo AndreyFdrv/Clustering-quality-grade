@@ -15,11 +15,14 @@ namespace Clustering_quality_grade
         private ArrayList points;
         public bool isClustered=false;
         private int cluster_size;
-        public ClusteringForm(ArrayList points)
+        private int width;
+        private int height;
+        public ClusteringForm(ArrayList points, int width, int height)
         {
             InitializeComponent();
             this.points = points;
-            this.cluster_size = cluster_size;
+            this.width = width;
+            this.height = height;
         }
         public ArrayList getPoints()
         {
@@ -28,7 +31,10 @@ namespace Clustering_quality_grade
         private void Run_clustering_buttun_Click(object sender, EventArgs e)
         {
             if (k_means_rb.Checked)
-                ;
+            {
+                K_Means algorithm = new K_Means(points, width, height);
+                points = algorithm.Cluster();
+            }    
             else if (DBSCAN_rb.Checked)
                 ;
             else if (neighbor_method_rb.Checked)
