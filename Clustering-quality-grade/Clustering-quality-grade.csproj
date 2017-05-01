@@ -45,8 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clustering algorithms\DBSCAN.cs" />
     <Compile Include="clustering algorithms\EM_Clustering.cs" />
     <Compile Include="clustering algorithms\K_Means.cs" />
+    <Compile Include="GenerationTypes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenerationTypes.Designer.cs">
+      <DependentUpon>GenerationTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="NormalRandom.cs" />
     <Compile Include="quality assessment criterions\Calinski_Harabasz_criterion.cs" />
     <Compile Include="quality assessment criterions\Davies_Bouldin_index.cs" />
@@ -86,6 +93,9 @@
     <Compile Include="quality assessment criterions\VNND_Index.cs" />
     <EmbeddedResource Include="ClusteringForm.resx">
       <DependentUpon>ClusteringForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GenerationTypes.resx">
+      <DependentUpon>GenerationTypes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

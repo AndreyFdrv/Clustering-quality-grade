@@ -19,6 +19,7 @@ namespace Clustering_quality_grade
         Random rand = new Random();
         Bitmap bitmap;
         Graphics gr;
+        int noise_count = 10;
         public MainForm()
         {
             InitializeComponent();
@@ -41,6 +42,26 @@ namespace Clustering_quality_grade
                 else if (myBrush.Color == Color.Green)
                     point.cluster_number = 2;
                 else if(myBrush.Color==Color.Blue)
+                    point.cluster_number = 3;
+                else
+                    point.cluster_number = 0;
+                points.Add(point);
+            }
+        }
+        void CreateNoise(SolidBrush brush)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                int x = rand.Next(0, pictureBox.Width);
+                int y = rand.Next(0, pictureBox.Height);
+                gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
+                   2 * point_radius, 2 * point_radius));
+                Point point = new Point(x, y);
+                if (brush.Color == Color.Red)
+                    point.cluster_number = 1;
+                else if (brush.Color == Color.Green)
+                    point.cluster_number = 2;
+                else if (brush.Color == Color.Blue)
                     point.cluster_number = 3;
                 else
                     point.cluster_number = 0;
@@ -174,6 +195,8 @@ namespace Clustering_quality_grade
                 ClassInfo.Add(2);
             for (int i = 2 * cluster_size; i < 3 * cluster_size; i++)
                 ClassInfo.Add(3);
+            for (int i = 3 * cluster_size; i < 3 * cluster_size + noise_count; i++)
+                ClassInfo.Add(0);
             return ClassInfo;
         }
         private void QualityGradeButton_Click(object sender, EventArgs e)
@@ -250,9 +273,12 @@ namespace Clustering_quality_grade
             cluster_size = 100;
             generate_boundary(100);
         }
-
         private void Non_clustered_button_Click(object sender, EventArgs e)
         {
+            GenerationTypes form = new GenerationTypes();
+            form.ShowDialog();
+            if (!form.isGenerationButtonPressed)
+                return;
             cluster_size = 10;
             points.Clear();
             gr.Clear(Color.White);
@@ -273,6 +299,13 @@ namespace Clustering_quality_grade
             Point p3 = new Point(x, y);
             CreateCluster(p3, radius, brush);
             pictureBox.Image = bitmap;
+            if(form.isWithNoise)
+            {
+                noise_count=10;
+                CreateNoise(brush);
+            }
+            else
+                noise_count = 0;
         }
         private void ColorizeClusters()
         {
@@ -295,9 +328,9 @@ namespace Clustering_quality_grade
             }
             pictureBox.Image = bitmap;
         }
-        private void EM_clustering_button_Click(object sender, EventArgs e)
+        private void clustering_button_Click(object sender, EventArgs e)
         {
-            ClusteringForm form = new ClusteringForm(points, pictureBox.Width, pictureBox.Height);
+            ClusteringForm form = new ClusteringForm(points, noise_count, pictureBox.Width, pictureBox.Height);
             form.ShowDialog();
             if (form.isClustered)
             {

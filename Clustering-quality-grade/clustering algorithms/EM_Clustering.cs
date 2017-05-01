@@ -15,10 +15,12 @@ namespace Clustering_quality_grade
         private ArrayList expected_value_matrix = new ArrayList();
         private ArrayList covariance_matrix = new ArrayList();
         private ArrayList weights = new ArrayList();
-        public EM_Clustering(ArrayList points, int clusters_count=3)
+        private int noise_count;
+        public EM_Clustering(ArrayList points, int noise_count, int clusters_count = 3)
         {
             this.points = points;
             this.clusters_count = clusters_count;
+            this.noise_count = noise_count;
         }
         private ArrayList MatrixMultiplication(ArrayList matrix1, ArrayList matrix2)
         {
@@ -173,7 +175,7 @@ namespace Clustering_quality_grade
             for(int i=0; i<((Point)points[0]).coordinates.Count; i++)
             {
                 ArrayList row = new ArrayList();
-                int cluster_size = points.Count / clusters_count;
+                int cluster_size = (points.Count-noise_count) / clusters_count;
                 for(int j=0; j<clusters_count; j++)
                 {
                     double sum = 0;

@@ -17,10 +17,12 @@ namespace Clustering_quality_grade
         private int cluster_size;
         private int width;
         private int height;
-        public ClusteringForm(ArrayList points, int width, int height)
+        private int noise_count;
+        public ClusteringForm(ArrayList points, int noise_count, int width, int height)
         {
             InitializeComponent();
             this.points = points;
+            this.noise_count = noise_count;
             this.width = width;
             this.height = height;
         }
@@ -36,14 +38,17 @@ namespace Clustering_quality_grade
                 points = algorithm.Cluster();
             }    
             else if (DBSCAN_rb.Checked)
-                ;
+            {
+                DBSCAN algorithm = new DBSCAN(points);
+                points = algorithm.Cluster();
+            }   
             else if (neighbor_method_rb.Checked)
                 ;
             else if (c_means_rb.Checked)
                 ;
             else if (EM_algorithm_rb.Checked)
             {
-                EM_Clustering algorithm = new EM_Clustering(points);
+                EM_Clustering algorithm = new EM_Clustering(points, noise_count);
                 points = algorithm.Cluster();
             }
             isClustered=true;

@@ -129,10 +129,10 @@
             this.clustering_button.TabIndex = 10;
             this.clustering_button.Text = "Применить алгоритм кластеризации";
             this.clustering_button.UseVisualStyleBackColor = true;
-            this.clustering_button.Click += new System.EventHandler(this.EM_clustering_button_Click);
-            // 
+            this.clustering_button.Click += new System.EventHandler(this.clustering_button_Click);
+            //
             // Non_clustered_button
-            // 
+            //
             this.Non_clustered_button.Location = new System.Drawing.Point(567, 306);
             this.Non_clustered_button.Name = "Non_clustered_button";
             this.Non_clustered_button.Size = new System.Drawing.Size(139, 47);

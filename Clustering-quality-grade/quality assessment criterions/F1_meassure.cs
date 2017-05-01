@@ -20,6 +20,10 @@ namespace Clustering_quality_grade
             double nij=0, ni=0;
             for (int i = 0; i < ClusterInfo.Count; i++ )
             {
+                if ((int)ClusterInfo[i] == 0)
+                    continue;
+                if ((int)ClassInfo[i] == 0)
+                    continue;
                 if (((int)ClusterInfo[i] == ClusterNumber) && ((int)ClassInfo[i] == ClassNumber))
                     nij++;
                 if ((int)ClusterInfo[i] == ClusterNumber)
@@ -32,6 +36,10 @@ namespace Clustering_quality_grade
             double nij = 0, nj = 0;
             for (int i = 0; i < ClusterInfo.Count; i++)
             {
+                if ((int)ClusterInfo[i] == 0)
+                    continue;
+                if ((int)ClassInfo[i] == 0)
+                    continue;
                 if (((int)ClusterInfo[i] == ClusterNumber) && ((int)ClassInfo[i] == ClassNumber))
                     nij++;
                 if ((int)ClassInfo[i] == ClassNumber)
@@ -74,8 +82,14 @@ namespace Clustering_quality_grade
                 ClassF1Maximumes.Add(F1_max);
             }
             double res=0;
+            double objects_count_without_noise = 0;
+            for (int i = 0; i < ClusterInfo.Count; i++)
+            {
+                if ((int)ClusterInfo[i] != 0)
+                    objects_count_without_noise++;
+            }
             for (int j = 0; j < ClassSides.Count; j++)
-                res += (double)ClassSides[j] / ClusterInfo.Count * (double)ClassF1Maximumes[j];
+                res += (double)ClassSides[j] / objects_count_without_noise * (double)ClassF1Maximumes[j];
             return res;
         }
     }
