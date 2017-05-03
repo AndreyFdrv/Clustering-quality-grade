@@ -15,6 +15,7 @@ namespace Clustering_quality_grade
         public bool isGenerationButtonPressed=false;
         public bool isWithNoise = false;
         public bool isWithoutNoise = false;
+        public bool isForHierarchicalClustering = false;
         public GenerationTypes()
         {
             InitializeComponent();
@@ -26,6 +27,8 @@ namespace Clustering_quality_grade
                 isWithNoise = true;
             if (without_noise_rb.Checked)
                 isWithoutNoise = true;
+            if (for_hierarchical_clustering_rb.Checked)
+                isForHierarchicalClustering = true;
             isGenerationButtonPressed = true;
             Close();
         }

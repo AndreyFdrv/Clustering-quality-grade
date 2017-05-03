@@ -267,11 +267,33 @@ namespace Clustering_quality_grade
             cluster_size = 100;
             generate_boundary(20);
         }
-
         private void boundary_big_Click(object sender, EventArgs e)
         {
             cluster_size = 100;
             generate_boundary(100);
+        }
+        private void GenerateForHierarchicalClustering(int depth, int x0, int y0, int width, int height, SolidBrush brush)
+        {
+            double offset_factor = 0.2;
+            x0 += (int)(offset_factor * width);
+            y0 += (int)(offset_factor * height);
+            width -= 2*(int)(offset_factor * width);
+            height -= 2*(int)(offset_factor * height);
+            if(depth==0)
+            {
+                int x = rand.Next(x0, x0+width);
+                int y = rand.Next(y0, y0+height);
+                HierircalClusteringPoint point = new HierircalClusteringPoint(x, y);
+                points.Add(point);
+                gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
+                    2 * point_radius, 2 * point_radius));
+            }
+            else
+            {
+                GenerateForHierarchicalClustering(depth - 1, x0, y0, width / 2, height / 2, brush);
+                GenerateForHierarchicalClustering(depth - 1, x0 + width / 2, y0, width / 2, height / 2, brush);
+                GenerateForHierarchicalClustering(depth - 1, x0+width/4, y0 + height / 2, width/2, height / 2, brush);
+            }
         }
         private void Non_clustered_button_Click(object sender, EventArgs e)
         {
@@ -279,33 +301,38 @@ namespace Clustering_quality_grade
             form.ShowDialog();
             if (!form.isGenerationButtonPressed)
                 return;
-            cluster_size = 10;
             points.Clear();
             gr.Clear(Color.White);
             SolidBrush brush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
-            int radius = rand.Next(20, 60);
-            int x = rand.Next(radius, pictureBox.Width - radius);
-            int y = rand.Next(radius, pictureBox.Width - radius);
-            Point p1 = new Point(x, y);
-            CreateCluster(p1, radius, brush);
-            radius = rand.Next(20, 60);
-            x = rand.Next(radius, pictureBox.Width - radius);
-            y = rand.Next(radius, pictureBox.Width - radius);
-            Point p2 = new Point(x, y);
-            CreateCluster(p2, radius, brush);
-            radius = rand.Next(20, 60);
-            x = rand.Next(radius, pictureBox.Width - radius);
-            y = rand.Next(radius, pictureBox.Width - radius);
-            Point p3 = new Point(x, y);
-            CreateCluster(p3, radius, brush);
-            pictureBox.Image = bitmap;
-            if(form.isWithNoise)
-            {
-                noise_count=10;
-                CreateNoise(brush);
-            }
+            if (form.isForHierarchicalClustering)
+                GenerateForHierarchicalClustering(4, 0, 0, pictureBox.Width, pictureBox.Height, brush);
             else
-                noise_count = 0;
+            {
+                cluster_size = 10;
+                int radius = rand.Next(20, 60);
+                int x = rand.Next(radius, pictureBox.Width - radius);
+                int y = rand.Next(radius, pictureBox.Width - radius);
+                Point p1 = new Point(x, y);
+                CreateCluster(p1, radius, brush);
+                radius = rand.Next(20, 60);
+                x = rand.Next(radius, pictureBox.Width - radius);
+                y = rand.Next(radius, pictureBox.Width - radius);
+                Point p2 = new Point(x, y);
+                CreateCluster(p2, radius, brush);
+                radius = rand.Next(20, 60);
+                x = rand.Next(radius, pictureBox.Width - radius);
+                y = rand.Next(radius, pictureBox.Width - radius);
+                Point p3 = new Point(x, y);
+                CreateCluster(p3, radius, brush);
+                if (form.isWithNoise)
+                {
+                    noise_count = 10;
+                    CreateNoise(brush);
+                }
+                else
+                    noise_count = 0;
+            }
+            pictureBox.Image = bitmap;
         }
         private void ColorizeClusters()
         {

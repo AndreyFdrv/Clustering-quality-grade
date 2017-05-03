@@ -55,6 +55,7 @@
       <DependentUpon>GenerationTypes.cs</DependentUpon>
     </Compile>
     <Compile Include="NormalRandom.cs" />
+    <Compile Include="HierarchicalClusteringPoint.cs" />
     <Compile Include="quality assessment criterions\Calinski_Harabasz_criterion.cs" />
     <Compile Include="quality assessment criterions\Davies_Bouldin_index.cs" />
     <Compile Include="ClusteringForm.cs">

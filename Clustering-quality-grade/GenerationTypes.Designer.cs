@@ -32,6 +32,7 @@
             this.with_noise_rb = new System.Windows.Forms.RadioButton();
             this.GenerateButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.for_hierarchical_clustering_rb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // without_noise_rb
@@ -58,7 +59,7 @@
             // 
             // GenerateButton
             // 
-            this.GenerateButton.Location = new System.Drawing.Point(12, 83);
+            this.GenerateButton.Location = new System.Drawing.Point(12, 132);
             this.GenerateButton.Name = "GenerateButton";
             this.GenerateButton.Size = new System.Drawing.Size(106, 32);
             this.GenerateButton.TabIndex = 2;
@@ -75,11 +76,23 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Выберите тип множества";
             // 
+            // for_hierarchical_clustering_rb
+            // 
+            this.for_hierarchical_clustering_rb.AutoSize = true;
+            this.for_hierarchical_clustering_rb.Location = new System.Drawing.Point(12, 79);
+            this.for_hierarchical_clustering_rb.Name = "for_hierarchical_clustering_rb";
+            this.for_hierarchical_clustering_rb.Size = new System.Drawing.Size(262, 17);
+            this.for_hierarchical_clustering_rb.TabIndex = 4;
+            this.for_hierarchical_clustering_rb.TabStop = true;
+            this.for_hierarchical_clustering_rb.Text = "множество для иерархической кластеризации";
+            this.for_hierarchical_clustering_rb.UseVisualStyleBackColor = true;
+            // 
             // GenerationTypes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(208, 126);
+            this.ClientSize = new System.Drawing.Size(273, 176);
+            this.Controls.Add(this.for_hierarchical_clustering_rb);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.GenerateButton);
             this.Controls.Add(this.with_noise_rb);
@@ -96,5 +109,6 @@
         private System.Windows.Forms.RadioButton with_noise_rb;
         private System.Windows.Forms.Button GenerateButton;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RadioButton for_hierarchical_clustering_rb;
     }
 }
