@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clustering algorithms\ClosestNeighborMethod.cs" />
     <Compile Include="clustering algorithms\DBSCAN.cs" />
     <Compile Include="clustering algorithms\EM_Clustering.cs" />
     <Compile Include="clustering algorithms\K_Means.cs" />
