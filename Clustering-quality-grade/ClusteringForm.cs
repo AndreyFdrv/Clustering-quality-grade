@@ -43,7 +43,10 @@ namespace Clustering_quality_grade
                 points = algorithm.Cluster();
             }   
             else if (neighbor_method_rb.Checked)
-                ;
+            {
+                ClosestNeighborMethod algorithm = new ClosestNeighborMethod(points);
+                points = algorithm.Cluster();
+            }
             else if (c_means_rb.Checked)
                 ;
             else if (EM_algorithm_rb.Checked)

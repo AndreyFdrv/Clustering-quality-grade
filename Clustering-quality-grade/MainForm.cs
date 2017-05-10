@@ -285,6 +285,7 @@ namespace Clustering_quality_grade
                 int y = rand.Next(y0, y0+height);
                 HierircalClusteringPoint point = new HierircalClusteringPoint(x, y);
                 points.Add(point);
+                gr.DrawString((points.Count-1).ToString(), new Font("Arial", 8), brush, x-6, y-15);
                 gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
                     2 * point_radius, 2 * point_radius));
             }
@@ -305,7 +306,7 @@ namespace Clustering_quality_grade
             gr.Clear(Color.White);
             SolidBrush brush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
             if (form.isForHierarchicalClustering)
-                GenerateForHierarchicalClustering(4, 0, 0, pictureBox.Width, pictureBox.Height, brush);
+                GenerateForHierarchicalClustering(3, 0, 0, pictureBox.Width, pictureBox.Height, brush);
             else
             {
                 cluster_size = 10;
@@ -340,11 +341,11 @@ namespace Clustering_quality_grade
             SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
             for (int i = 0; i < points.Count; i++)
             {
-                if(((Point)points[i]).cluster_number==1)
-                    myBrush.Color = Color.Red;
-                else if(((Point)points[i]).cluster_number==2)
+                if (((Point)points[i]).cluster_number == 1)
+                    myBrush.Color = System.Drawing.ColorTranslator.FromHtml("#FF0000");
+                else if (((Point)points[i]).cluster_number == 2)
                     myBrush.Color = Color.Green;
-                else if(((Point)points[i]).cluster_number==3)
+                else if (((Point)points[i]).cluster_number == 3)
                     myBrush.Color = Color.Blue;
                 else
                     myBrush.Color = Color.Black;
@@ -362,7 +363,7 @@ namespace Clustering_quality_grade
             if (form.isClustered)
             {
                 points = form.getPoints();
-                ColorizeClusters();
+                //ColorizeClusters();
             }
         }
     }
