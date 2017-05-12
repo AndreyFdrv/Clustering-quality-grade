@@ -23,3 +23,4 @@ C:\Users\michail\Desktop\ВКР\Clustering-quality-grade\Clustering-quality-grad
 C:\Users\michail\Desktop\ВКР\Clustering-quality-grade\Clustering-quality-grade\obj\Debug\Clustering_quality_grade.Properties.Resources.resources
 C:\Users\michail\Desktop\ВКР\Clustering-quality-grade\Clustering-quality-grade\obj\Debug\Clustering_quality_grade.TimeCalculationForm.resources
 C:\Users\michail\Desktop\ВКР\Clustering-quality-grade\Clustering-quality-grade\obj\Debug\Clustering-quality-grade.csproj.GenerateResource.Cache
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Clustering-quality-grade\Clustering-quality-grade\obj\Debug\Clustering_quality_grade.DendrogramForm.resources

@@ -49,6 +49,12 @@
     <Compile Include="clustering algorithms\DBSCAN.cs" />
     <Compile Include="clustering algorithms\EM_Clustering.cs" />
     <Compile Include="clustering algorithms\K_Means.cs" />
+    <Compile Include="DendrogramForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DendrogramForm.Designer.cs">
+      <DependentUpon>DendrogramForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GenerationTypes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     <Compile Include="quality assessment criterions\VNND_Index.cs" />
     <EmbeddedResource Include="ClusteringForm.resx">
       <DependentUpon>ClusteringForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DendrogramForm.resx">
+      <DependentUpon>DendrogramForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenerationTypes.resx">
       <DependentUpon>GenerationTypes.cs</DependentUpon>

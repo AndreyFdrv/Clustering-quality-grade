@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Collections;
 namespace Clustering_quality_grade
 {
-    class Dendogram
+    public class Dendrogram
     {
-        public Dendogram left;
-        public Dendogram right;
+        public Dendrogram left;
+        public Dendrogram right;
         public bool HasValue;
         public int value;
     }
@@ -75,16 +75,16 @@ namespace Clustering_quality_grade
             }
             return result;
         }
-        private void ChangeDendogramParts(ref ArrayList dendrogram_parts_list, ArrayList clusters_list, int min_i, int min_j)
+        private void ChangeDendrogramParts(ref ArrayList dendrogram_parts_list, ArrayList clusters_list, int min_i, int min_j)
         {
-            Dendogram root = new Dendogram();
+            Dendrogram root = new Dendrogram();
             root.HasValue = false;
             if(((ArrayList)clusters_list[min_i]).Count==1)
             {
-                Dendogram left = new Dendogram();
-                left.left = new Dendogram();
+                Dendrogram left = new Dendrogram();
+                left.left = new Dendrogram();
                 left.left.HasValue=false;
-                left.right = new Dendogram();
+                left.right = new Dendrogram();
                 left.right.HasValue = false;
                 left.HasValue = true;
                 left.value = (int)((ArrayList)clusters_list[min_i])[0];
@@ -92,24 +92,24 @@ namespace Clustering_quality_grade
             }
             else
             {
-                Dendogram cur_dendrogram = (Dendogram)dendrogram_parts_list[0];
+                Dendrogram cur_dendrogram = (Dendrogram)dendrogram_parts_list[0];
                 int cur_dendrogram_index = 0;
                 for(int i=0; i<dendrogram_parts_list.Count; i++)
                 {
-                    cur_dendrogram = (Dendogram)dendrogram_parts_list[i];
-                    Dendogram cur_left = cur_dendrogram;
+                    cur_dendrogram = (Dendrogram)dendrogram_parts_list[i];
+                    Dendrogram cur_left = cur_dendrogram;
                     while (!cur_left.HasValue)
                         cur_left = cur_left.left;
-                    bool isLeftDendogramFound=false;
+                    bool isLeftDendrogramFound=false;
                     for (int j = 0; j < ((ArrayList)clusters_list[min_i]).Count; j++)
                     {
                         if((int)((ArrayList)clusters_list[min_i])[j]==cur_left.value)
                         {
-                            isLeftDendogramFound = true;
+                            isLeftDendrogramFound = true;
                             break;
                         }
                     }
-                    if (isLeftDendogramFound)
+                    if (isLeftDendrogramFound)
                     {
                         cur_dendrogram_index = i;
                         break;
@@ -120,10 +120,10 @@ namespace Clustering_quality_grade
             }
             if (((ArrayList)clusters_list[min_j]).Count == 1)
             {
-                Dendogram right = new Dendogram();
-                right.left = new Dendogram();
+                Dendrogram right = new Dendrogram();
+                right.left = new Dendrogram();
                 right.left.HasValue = false;
-                right.right = new Dendogram();
+                right.right = new Dendrogram();
                 right.right.HasValue = false;
                 right.HasValue = true;
                 right.value = (int)((ArrayList)clusters_list[min_j])[0];
@@ -131,24 +131,24 @@ namespace Clustering_quality_grade
             }
             else
             {
-                Dendogram cur_dendrogram = (Dendogram)dendrogram_parts_list[0];
+                Dendrogram cur_dendrogram = (Dendrogram)dendrogram_parts_list[0];
                 int cur_dendrogram_index = 0;
                 for (int i = 0; i < dendrogram_parts_list.Count; i++)
                 {
-                    cur_dendrogram = (Dendogram)dendrogram_parts_list[i];
-                    Dendogram cur_left = cur_dendrogram;
+                    cur_dendrogram = (Dendrogram)dendrogram_parts_list[i];
+                    Dendrogram cur_left = cur_dendrogram;
                     while (!cur_left.HasValue)
                         cur_left = cur_left.left;
-                    bool isRightDendogramFound = false;
+                    bool isRightDendrogramFound = false;
                     for (int j = 0; j < ((ArrayList)clusters_list[min_j]).Count; j++)
                     {
                         if ((int)((ArrayList)clusters_list[min_j])[j] == cur_left.value)
                         {
-                            isRightDendogramFound = true;
+                            isRightDendrogramFound = true;
                             break;
                         }
                     }
-                    if (isRightDendogramFound)
+                    if (isRightDendrogramFound)
                     {
                         cur_dendrogram_index = i;
                         break;
@@ -176,12 +176,12 @@ namespace Clustering_quality_grade
                     }
                 }
             }
-            ChangeDendogramParts(ref dendrogram_parts_list, cur_clusters_list, min_i, min_j);
+            ChangeDendrogramParts(ref dendrogram_parts_list, cur_clusters_list, min_i, min_j);
             ChangeCurClustersList(ref cur_clusters_list, min_i, min_j);
             ArrayList new_distance_matrix = CreateDistanceMatrix(cur_clusters_list);
             distance_matrix = new_distance_matrix;
         }
-        public ArrayList Cluster()
+        public Dendrogram Cluster()
         {
             ArrayList cur_clusters_list=new ArrayList();
             for(int i=0; i<points.Count; i++)
@@ -194,7 +194,7 @@ namespace Clustering_quality_grade
             ArrayList dendrogram_parts_list = new ArrayList();
             while (distance_matrix.Count != 1)
                 ConsolidateClusters(ref distance_matrix, ref cur_clusters_list, ref dendrogram_parts_list);
-            return points;
+            return (Dendrogram)dendrogram_parts_list[0];
         }
     }
 }

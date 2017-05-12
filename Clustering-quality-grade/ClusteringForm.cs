@@ -13,6 +13,8 @@ namespace Clustering_quality_grade
     public partial class ClusteringForm : Form
     {
         private ArrayList points;
+        private Dendrogram dendrogram;
+        public bool isHierarchicalClustering = false;
         public bool isClustered=false;
         private int cluster_size;
         private int width;
@@ -30,6 +32,10 @@ namespace Clustering_quality_grade
         {
             return points;
         }
+        public Dendrogram getDendrogram()
+        {
+            return dendrogram;
+        }
         private void Run_clustering_buttun_Click(object sender, EventArgs e)
         {
             if (k_means_rb.Checked)
@@ -44,8 +50,9 @@ namespace Clustering_quality_grade
             }   
             else if (neighbor_method_rb.Checked)
             {
+                isHierarchicalClustering = true;
                 ClosestNeighborMethod algorithm = new ClosestNeighborMethod(points);
-                points = algorithm.Cluster();
+                dendrogram = algorithm.Cluster();
             }
             else if (c_means_rb.Checked)
                 ;

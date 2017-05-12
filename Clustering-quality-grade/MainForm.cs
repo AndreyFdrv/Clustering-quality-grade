@@ -20,6 +20,7 @@ namespace Clustering_quality_grade
         Bitmap bitmap;
         Graphics gr;
         int noise_count = 10;
+        Dendrogram dendrogram;
         public MainForm()
         {
             InitializeComponent();
@@ -362,8 +363,17 @@ namespace Clustering_quality_grade
             form.ShowDialog();
             if (form.isClustered)
             {
-                points = form.getPoints();
-                //ColorizeClusters();
+                if(form.isHierarchicalClustering)
+                {
+                    dendrogram = form.getDendrogram();
+                    DendrogramForm dendrogram_form = new DendrogramForm(dendrogram);
+                    dendrogram_form.Show();
+                }
+                else
+                {
+                    points = form.getPoints();
+                    ColorizeClusters();
+                }
             }
         }
     }
