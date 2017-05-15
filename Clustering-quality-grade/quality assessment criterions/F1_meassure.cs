@@ -66,6 +66,12 @@ namespace Clustering_quality_grade
                 if ((int) ClassInfo[i] > class_max_number)
                     class_max_number =(int) ClassInfo[i];
             }
+            int cluster_max_number = 0;
+            for (int i = 0; i < ClassInfo.Count; i++)
+            {
+                if ((int)ClusterInfo[i] > cluster_max_number)
+                    cluster_max_number = (int)ClusterInfo[i];
+            }
             for (int j = 1; j <= class_max_number; j++)
             {
                 double side = 0;
@@ -74,6 +80,9 @@ namespace Clustering_quality_grade
                 {
                     if ((int)ClassInfo[i] == j)
                         side++;
+                }
+                for (int i = 1; i <= cluster_max_number; i++)
+                {
                     double cur_res = F1(i, j);
                     if (cur_res > F1_max)
                         F1_max = cur_res;

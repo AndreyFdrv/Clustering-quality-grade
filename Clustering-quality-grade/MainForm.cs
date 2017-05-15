@@ -21,6 +21,7 @@ namespace Clustering_quality_grade
         Graphics gr;
         int noise_count = 10;
         Dendrogram dendrogram;
+        bool isHierarchicalClustering = false;
         public MainForm()
         {
             InitializeComponent();
@@ -190,26 +191,53 @@ namespace Clustering_quality_grade
         private ArrayList CreateClassInfo()
         {
             ArrayList ClassInfo = new ArrayList();
-            for (int i = 0; i < cluster_size; i++)
-                ClassInfo.Add(1);
-            for (int i = cluster_size; i < 2 * cluster_size; i++)
-                ClassInfo.Add(2);
-            for (int i = 2 * cluster_size; i < 3 * cluster_size; i++)
-                ClassInfo.Add(3);
-            for (int i = 3 * cluster_size; i < 3 * cluster_size + noise_count; i++)
-                ClassInfo.Add(0);
+            if (isHierarchicalClustering)
+            {
+                for(int i=0; i<points.Count; i++)
+                {
+                    ArrayList row = new ArrayList();
+                    row.Add(i / 9 + 1);
+                    row.Add(i / 3 + 1);
+                    ClassInfo.Add(row);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < cluster_size; i++)
+                    ClassInfo.Add(1);
+                for (int i = cluster_size; i < 2 * cluster_size; i++)
+                    ClassInfo.Add(2);
+                for (int i = 2 * cluster_size; i < 3 * cluster_size; i++)
+                    ClassInfo.Add(3);
+                for (int i = 3 * cluster_size; i < 3 * cluster_size + noise_count; i++)
+                    ClassInfo.Add(0);
+            }
             return ClassInfo;
         }
         private void QualityGradeButton_Click(object sender, EventArgs e)
         {
-            ArrayList ClusterInfo = CreateClusterInfo();
-            ArrayList ClassInfo = CreateClassInfo();
-            F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
-            String output = "F1-мера: " + f1_meassure.F1() + "\r\n";
-            Rand_Jaccard_FM rand_jaccard_fm = new Rand_Jaccard_FM(ClusterInfo, ClassInfo);
-            output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
-            output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
-            output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
+            String output;
+            if (isHierarchicalClustering)
+            {
+                ArrayList ClassInfo = CreateClassInfo();
+                Hierarchical_F1_meassure f1_meassure = new Hierarchical_F1_meassure(dendrogram, ClassInfo);
+                output = "F1-мера: " + f1_meassure.F1() + "\r\n";
+                Hierarchical_Rand_Jaccard_FM rand_jaccard_fm = new Hierarchical_Rand_Jaccard_FM(dendrogram, ClassInfo);
+                output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
+                output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
+                output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
+            }
+            else
+            {
+                ArrayList ClusterInfo = CreateClusterInfo();
+                ArrayList ClassInfo = CreateClassInfo();
+                F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
+                output = "F1-мера: " + f1_meassure.F1() + "\r\n";
+                Rand_Jaccard_FM rand_jaccard_fm = new Rand_Jaccard_FM(ClusterInfo, ClassInfo);
+                output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
+                output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
+                output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
+            }
             /*Calinski_Harabasz_criterion CHC = new Calinski_Harabasz_criterion(points);
             output += "Критерий Calinski Harabasz: " + CHC.compute_criterion() + "\r\n";
             Dunn_index dunn = new Dunn_index(points);
@@ -365,12 +393,14 @@ namespace Clustering_quality_grade
             {
                 if(form.isHierarchicalClustering)
                 {
+                    isHierarchicalClustering = true;
                     dendrogram = form.getDendrogram();
                     DendrogramForm dendrogram_form = new DendrogramForm(dendrogram);
                     dendrogram_form.Show();
                 }
                 else
                 {
+                    isHierarchicalClustering = false;
                     points = form.getPoints();
                     ColorizeClusters();
                 }
