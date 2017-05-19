@@ -16,6 +16,7 @@ namespace Clustering_quality_grade
         public bool isWithNoise = false;
         public bool isWithoutNoise = false;
         public bool isForHierarchicalClustering = false;
+        public bool isForFuzzyClustering = false;
         public GenerationTypes()
         {
             InitializeComponent();
@@ -29,6 +30,8 @@ namespace Clustering_quality_grade
                 isWithoutNoise = true;
             if (for_hierarchical_clustering_rb.Checked)
                 isForHierarchicalClustering = true;
+            if (for_fuzzy_clustering_rb.Checked)
+                isForFuzzyClustering = true;
             isGenerationButtonPressed = true;
             Close();
         }

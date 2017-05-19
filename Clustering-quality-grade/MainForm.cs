@@ -14,7 +14,7 @@ namespace Clustering_quality_grade
     public partial class MainForm : Form
     {
         ArrayList points=new ArrayList();
-        const int point_radius = 3;
+        int point_radius = 3;
         int cluster_size = 10;
         Random rand = new Random();
         Bitmap bitmap;
@@ -22,13 +22,15 @@ namespace Clustering_quality_grade
         int noise_count = 10;
         Dendrogram dendrogram;
         bool isHierarchicalClustering = false;
+        bool isFuzzyClustering = false;
+        ArrayList MembershipMatrix;
         public MainForm()
         {
             InitializeComponent();
             bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
             gr = Graphics.FromImage(bitmap);
         }
-        void CreateCluster(Point center, int radius, SolidBrush myBrush)
+        void CreateCluster(Point center, int radius, SolidBrush myBrush, bool isFuzzyClustering)
         {
             for (int i = 0; i < cluster_size; i++)
             {
@@ -38,16 +40,24 @@ namespace Clustering_quality_grade
                 int y =(int)center.coordinates[1]+(int)(r * Math.Sin(alpha));
                 gr.FillEllipse(myBrush, new Rectangle(x - point_radius, y - point_radius,
                    2 * point_radius, 2 * point_radius));
-                Point point=new Point(x, y);
-                if (myBrush.Color == Color.Red)
-                    point.cluster_number = 1;
-                else if (myBrush.Color == Color.Green)
-                    point.cluster_number = 2;
-                else if(myBrush.Color==Color.Blue)
-                    point.cluster_number = 3;
+                if (isFuzzyClustering)
+                {
+                    FuzzyClusteringPoint point = new FuzzyClusteringPoint(x, y);
+                    points.Add(point);
+                }
                 else
-                    point.cluster_number = 0;
-                points.Add(point);
+                {
+                    Point point = new Point(x, y);
+                    if (myBrush.Color == Color.Red)
+                        point.cluster_number = 1;
+                    else if (myBrush.Color == Color.Green)
+                        point.cluster_number = 2;
+                    else if (myBrush.Color == Color.Blue)
+                        point.cluster_number = 3;
+                    else
+                        point.cluster_number = 0;
+                    points.Add(point);
+                }
             }
         }
         void CreateNoise(SolidBrush brush)
@@ -109,56 +119,6 @@ namespace Clustering_quality_grade
                 points.Add(point);
             }
         }
-        private void HighQualityButton_Click(object sender, EventArgs e)
-        {
-            cluster_size = 10;
-            points.Clear();
-            gr.Clear(Color.White);
-            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
-            int radius = rand.Next(20, 60);
-            int x = rand.Next(radius, pictureBox.Width - radius);
-            int y = rand.Next(radius, pictureBox.Width - radius);
-            Point p1=new Point(x, y);
-            CreateCluster(p1, radius, myBrush);
-            radius = rand.Next(20, 60);
-            x = rand.Next(radius, pictureBox.Width - radius);
-            y = rand.Next(radius, pictureBox.Width - radius);
-            Point p2 = new Point(x, y);
-            myBrush.Color = Color.Green;
-            CreateCluster(p2, radius, myBrush);
-            radius = rand.Next(20, 60);
-            x = rand.Next(radius, pictureBox.Width - radius);
-            y = rand.Next(radius, pictureBox.Width - radius);
-            Point p3 = new Point(x, y);
-            myBrush.Color = Color.Blue;
-            CreateCluster(p3, radius, myBrush);
-            pictureBox.Image = bitmap;
-        }
-        private void MiddleQualityButton_Click(object sender, EventArgs e)
-        {
-            cluster_size = 10;
-            points.Clear();
-            gr.Clear(Color.White);
-            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
-            int radius = rand.Next(20, 60);
-            int x = rand.Next(radius, pictureBox.Width - radius);
-            int y = rand.Next(radius, pictureBox.Width - radius);
-            Point p1 = new Point(x, y);
-            CreateCluster(p1, radius, myBrush);
-            radius = rand.Next(20, 60);
-            x = rand.Next(radius, pictureBox.Width - radius);
-            y = rand.Next(radius, pictureBox.Width - radius);
-            Point p2 = new Point(x, y);
-            myBrush.Color = Color.Green;
-            CreateCluster(p2, radius, myBrush);
-            radius = rand.Next(20, 60);
-            x = rand.Next(radius, pictureBox.Width - radius);
-            y = rand.Next(radius, pictureBox.Width - radius);
-            Point p3 = new Point(x, y);
-            CreateRandomizedCluster(p3, radius);
-            pictureBox.Image = bitmap;
-        }
-
         private void LowQualityButton_Click(object sender, EventArgs e)
         {
             cluster_size = 10;
@@ -270,37 +230,6 @@ namespace Clustering_quality_grade
             TimeCalculationForm form = new TimeCalculationForm();
             form.ShowDialog();
         }
-        private void generate_boundary(int radius)
-        {
-            points.Clear();
-            gr.Clear(Color.White);
-            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
-            int x = radius;
-            int y = radius;
-            Point p1 = new Point(x, y);
-            CreateCluster(p1, radius, myBrush);
-            x = 3 *radius;
-            y = radius;
-            Point p2 = new Point(x, y);
-            myBrush.Color = Color.Green;
-            CreateCluster(p2, radius, myBrush);
-            x = 2*radius;
-            y = radius+(int)(2*(double)radius*Math.Sin(Math.PI/3));
-            Point p3 = new Point(x, y);
-            myBrush.Color = Color.Blue;
-            CreateCluster(p3, radius, myBrush);
-            pictureBox.Image = bitmap;
-        }
-        private void boundary_small_Click(object sender, EventArgs e)
-        {
-            cluster_size = 100;
-            generate_boundary(20);
-        }
-        private void boundary_big_Click(object sender, EventArgs e)
-        {
-            cluster_size = 100;
-            generate_boundary(100);
-        }
         private void GenerateForHierarchicalClustering(int depth, int x0, int y0, int width, int height, SolidBrush brush)
         {
             double offset_factor = 0.2;
@@ -312,7 +241,7 @@ namespace Clustering_quality_grade
             {
                 int x = rand.Next(x0, x0+width);
                 int y = rand.Next(y0, y0+height);
-                HierircalClusteringPoint point = new HierircalClusteringPoint(x, y);
+                FuzzyClusteringPoint point = new FuzzyClusteringPoint(x, y);
                 points.Add(point);
                 gr.DrawString((points.Count-1).ToString(), new Font("Arial", 8), brush, x-6, y-15);
                 gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
@@ -343,17 +272,38 @@ namespace Clustering_quality_grade
                 int x = rand.Next(radius, pictureBox.Width - radius);
                 int y = rand.Next(radius, pictureBox.Width - radius);
                 Point p1 = new Point(x, y);
-                CreateCluster(p1, radius, brush);
+                CreateCluster(p1, radius, brush, form.isForFuzzyClustering);
                 radius = rand.Next(20, 60);
                 x = rand.Next(radius, pictureBox.Width - radius);
                 y = rand.Next(radius, pictureBox.Width - radius);
                 Point p2 = new Point(x, y);
-                CreateCluster(p2, radius, brush);
+                CreateCluster(p2, radius, brush, form.isForFuzzyClustering);
                 radius = rand.Next(20, 60);
                 x = rand.Next(radius, pictureBox.Width - radius);
                 y = rand.Next(radius, pictureBox.Width - radius);
                 Point p3 = new Point(x, y);
-                CreateCluster(p3, radius, brush);
+                CreateCluster(p3, radius, brush, form.isForFuzzyClustering);
+                if(form.isForFuzzyClustering)
+                {
+                    x=((int)p1.coordinates[0]+(int)p2.coordinates[0])/2;
+                    y=((int)p1.coordinates[1]+(int)p2.coordinates[1])/2;
+                    FuzzyClusteringPoint p12 = new FuzzyClusteringPoint(x, y);
+                    gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
+                        2 * point_radius, 2 * point_radius));
+                    points.Add(p12);
+                    x = ((int)p1.coordinates[0] + (int)p3.coordinates[0]) / 2;
+                    y = ((int)p1.coordinates[1] + (int)p3.coordinates[1]) / 2;
+                    FuzzyClusteringPoint p13 = new FuzzyClusteringPoint(x, y);
+                    gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
+                        2 * point_radius, 2 * point_radius));
+                    points.Add(p13);
+                    x = ((int)p2.coordinates[0] + (int)p3.coordinates[0]) / 2;
+                    y = ((int)p2.coordinates[1] + (int)p3.coordinates[1]) / 2;
+                    FuzzyClusteringPoint p23 = new FuzzyClusteringPoint(x, y);
+                    gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
+                        2 * point_radius, 2 * point_radius));
+                    points.Add(p23);
+                }
                 if (form.isWithNoise)
                 {
                     noise_count = 10;
@@ -371,7 +321,7 @@ namespace Clustering_quality_grade
             for (int i = 0; i < points.Count; i++)
             {
                 if (((Point)points[i]).cluster_number == 1)
-                    myBrush.Color = System.Drawing.ColorTranslator.FromHtml("#FF0000");
+                    myBrush.Color = Color.Red;
                 else if (((Point)points[i]).cluster_number == 2)
                     myBrush.Color = Color.Green;
                 else if (((Point)points[i]).cluster_number == 3)
@@ -385,6 +335,36 @@ namespace Clustering_quality_grade
             }
             pictureBox.Image = bitmap;
         }
+        private void ColorizeFuzzyClusters()
+        {
+            point_radius = 6;
+            gr.Clear(Color.White);
+            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
+            for (int i = 0; i < points.Count; i++)
+            {
+                int x = (int)((FuzzyClusteringPoint)points[i]).coordinates[0];
+                int y = (int)((FuzzyClusteringPoint)points[i]).coordinates[1];
+                int start_angle = 0;
+                for(int j=0; j<((ArrayList)MembershipMatrix[0]).Count; j++)
+                {
+                    if (j == 0)
+                        myBrush.Color = Color.Red;
+                    else if (j == 1)
+                        myBrush.Color = Color.Green;
+                    else if (j == 2)
+                        myBrush.Color = Color.Blue;
+                    else
+                        myBrush.Color = Color.Black;
+                    double membership = (double)((ArrayList)MembershipMatrix[i])[j];
+                    int end_angle = (int)(membership * 360);
+                    gr.FillPie(myBrush, new Rectangle(x - point_radius, y - point_radius,
+                        2 * point_radius, 2 * point_radius), start_angle, end_angle);
+                    start_angle += end_angle;
+                }
+            }
+            point_radius = 3;
+            pictureBox.Image = bitmap;
+        }
         private void clustering_button_Click(object sender, EventArgs e)
         {
             ClusteringForm form = new ClusteringForm(points, noise_count, pictureBox.Width, pictureBox.Height);
@@ -394,13 +374,22 @@ namespace Clustering_quality_grade
                 if(form.isHierarchicalClustering)
                 {
                     isHierarchicalClustering = true;
+                    isFuzzyClustering = false;
                     dendrogram = form.getDendrogram();
                     DendrogramForm dendrogram_form = new DendrogramForm(dendrogram);
                     dendrogram_form.Show();
                 }
+                if(form.isFuzzyClustering)
+                {
+                    isHierarchicalClustering = false;
+                    isFuzzyClustering = true;
+                    MembershipMatrix = form.getMemebershipMatrix();
+                    ColorizeFuzzyClusters();
+                }
                 else
                 {
                     isHierarchicalClustering = false;
+                    isFuzzyClustering = false;
                     points = form.getPoints();
                     ColorizeClusters();
                 }

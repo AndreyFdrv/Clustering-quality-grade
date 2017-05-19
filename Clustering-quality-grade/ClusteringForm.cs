@@ -15,11 +15,12 @@ namespace Clustering_quality_grade
         private ArrayList points;
         private Dendrogram dendrogram;
         public bool isHierarchicalClustering = false;
+        public bool isFuzzyClustering = false;
         public bool isClustered=false;
-        private int cluster_size;
         private int width;
         private int height;
         private int noise_count;
+        ArrayList MembershipMatrix;
         public ClusteringForm(ArrayList points, int noise_count, int width, int height)
         {
             InitializeComponent();
@@ -35,6 +36,10 @@ namespace Clustering_quality_grade
         public Dendrogram getDendrogram()
         {
             return dendrogram;
+        }
+        public ArrayList getMemebershipMatrix()
+        {
+            return MembershipMatrix;
         }
         private void Run_clustering_buttun_Click(object sender, EventArgs e)
         {
@@ -55,7 +60,11 @@ namespace Clustering_quality_grade
                 dendrogram = algorithm.Cluster();
             }
             else if (c_means_rb.Checked)
-                ;
+            {
+                isFuzzyClustering = true;
+                C_Means algorithm = new C_Means(points);
+                MembershipMatrix = algorithm.Cluster();
+            }
             else if (EM_algorithm_rb.Checked)
             {
                 EM_Clustering algorithm = new EM_Clustering(points, noise_count);
