@@ -62,8 +62,10 @@
     <Compile Include="GenerationTypes.Designer.cs">
       <DependentUpon>GenerationTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="modifications of quality assessment criterions\Fuzzy_F1_meassure.cs" />
     <Compile Include="modifications of quality assessment criterions\Hierarchical_F1_meassure.cs" />
     <Compile Include="modifications of quality assessment criterions\Hierarchical_Rand_Jaccard_FM.cs" />
+    <Compile Include="modifications of quality assessment criterions\Fuzzy_Rand_Jaccard_FM.cs" />
     <Compile Include="NormalRandom.cs" />
     <Compile Include="FuzzyClusteringPoint.cs" />
     <Compile Include="quality assessment criterions\Calinski_Harabasz_criterion.cs" />

@@ -119,33 +119,34 @@ namespace Clustering_quality_grade
                 points.Add(point);
             }
         }
-        private void LowQualityButton_Click(object sender, EventArgs e)
-        {
-            cluster_size = 10;
-            points.Clear();
-            gr.Clear(Color.White);
-            int radius = rand.Next(20, 60);
-            int x = rand.Next(radius, pictureBox.Width - radius);
-            int y = rand.Next(radius, pictureBox.Width - radius);
-            Point p1 = new Point(x, y);
-            CreateRandomizedCluster(p1, radius);
-            radius = rand.Next(20, 60);
-            x = rand.Next(radius, pictureBox.Width - radius);
-            y = rand.Next(radius, pictureBox.Width - radius);
-            Point p2 = new Point(x, y);
-            CreateRandomizedCluster(p2, radius);
-            radius = rand.Next(20, 60);
-            x = rand.Next(radius, pictureBox.Width - radius);
-            y = rand.Next(radius, pictureBox.Width - radius);
-            Point p3 = new Point(x, y);
-            CreateRandomizedCluster(p3, radius);
-            pictureBox.Image = bitmap;
-        }
-        private ArrayList CreateClusterInfo()
+        private ArrayList CreateClusterInfo(double eps=0.1)
         {
             ArrayList ClusterInfo = new ArrayList();
-            for (int i = 0; i < points.Count; i++)
-                ClusterInfo.Add(((Point)points[i]).cluster_number);
+            if (isFuzzyClustering)
+            {
+                for(int i=0; i<points.Count; i++)
+                {
+                    double max = 0;
+                    for(int j=0; j<((ArrayList)MembershipMatrix[i]).Count; j++)
+                    {
+                        if ((double)((ArrayList)MembershipMatrix[i])[j] > max)
+                            max = (double)((ArrayList)MembershipMatrix[i])[j];
+                    }
+                    ArrayList row=new ArrayList();
+                    for(int j=0; j<((ArrayList)MembershipMatrix[i]).Count; j++)
+                    {
+                        double membership = (double)((ArrayList)MembershipMatrix[i])[j];
+                        if (max - membership < eps)
+                            row.Add(j + 1);
+                    }
+                    ClusterInfo.Add(row);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < points.Count; i++)
+                    ClusterInfo.Add(((Point)points[i]).cluster_number);
+            }
             return ClusterInfo;
         }
         private ArrayList CreateClassInfo()
@@ -158,6 +159,35 @@ namespace Clustering_quality_grade
                     ArrayList row = new ArrayList();
                     row.Add(i / 9 + 1);
                     row.Add(i / 3 + 1);
+                    ClassInfo.Add(row);
+                }
+            }
+            else if(isFuzzyClustering)
+            {
+                for(int i=0; i<points.Count; i++)
+                {
+                    ArrayList row = new ArrayList();
+                    if (i < 10)
+                        row.Add(1);
+                    else if (i < 20)
+                        row.Add(2);
+                    else if (i < 30)
+                        row.Add(3);
+                    else if(i==30)
+                    {
+                        row.Add(1);
+                        row.Add(2);
+                    }
+                    else if (i == 31)
+                    {
+                        row.Add(1);
+                        row.Add(3);
+                    }
+                    else if (i == 32)
+                    {
+                        row.Add(2);
+                        row.Add(3);
+                    }
                     ClassInfo.Add(row);
                 }
             }
@@ -183,6 +213,17 @@ namespace Clustering_quality_grade
                 Hierarchical_F1_meassure f1_meassure = new Hierarchical_F1_meassure(dendrogram, ClassInfo);
                 output = "F1-мера: " + f1_meassure.F1() + "\r\n";
                 Hierarchical_Rand_Jaccard_FM rand_jaccard_fm = new Hierarchical_Rand_Jaccard_FM(dendrogram, ClassInfo);
+                output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
+                output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
+                output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
+            }
+            else if(isFuzzyClustering)
+            {
+                ArrayList ClusterInfo = CreateClusterInfo();
+                ArrayList ClassInfo = CreateClassInfo();
+                Fuzzy_F1_meassure f1_meassure = new Fuzzy_F1_meassure(ClusterInfo, ClassInfo);
+                output = "F1-мера: " + f1_meassure.F1() + "\r\n";
+                Fuzzy_Rand_Jaccard_FM rand_jaccard_fm = new Fuzzy_Rand_Jaccard_FM(ClusterInfo, ClassInfo);
                 output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
                 output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
                 output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
