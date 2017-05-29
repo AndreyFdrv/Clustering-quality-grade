@@ -42,20 +42,20 @@ namespace Clustering_quality_grade
                    2 * point_radius, 2 * point_radius));
                 if (isFuzzyClustering)
                 {
-                    FuzzyClusteringPoint point = new FuzzyClusteringPoint(x, y);
+                    Point point = new Point(x, y);
                     points.Add(point);
                 }
                 else
                 {
                     Point point = new Point(x, y);
                     if (myBrush.Color == Color.Red)
-                        point.cluster_number = 1;
+                        point.cluster_numbers.Add(1);
                     else if (myBrush.Color == Color.Green)
-                        point.cluster_number = 2;
+                        point.cluster_numbers.Add(2);
                     else if (myBrush.Color == Color.Blue)
-                        point.cluster_number = 3;
+                        point.cluster_numbers.Add(3);
                     else
-                        point.cluster_number = 0;
+                        point.cluster_numbers.Add(0);
                     points.Add(point);
                 }
             }
@@ -70,13 +70,13 @@ namespace Clustering_quality_grade
                    2 * point_radius, 2 * point_radius));
                 Point point = new Point(x, y);
                 if (brush.Color == Color.Red)
-                    point.cluster_number = 1;
+                    point.cluster_numbers.Add(1);
                 else if (brush.Color == Color.Green)
-                    point.cluster_number = 2;
+                    point.cluster_numbers.Add(2);
                 else if (brush.Color == Color.Blue)
-                    point.cluster_number = 3;
+                    point.cluster_numbers.Add(3);
                 else
-                    point.cluster_number = 0;
+                    point.cluster_numbers.Add(0);
                 points.Add(point);
             }
         }
@@ -115,7 +115,7 @@ namespace Clustering_quality_grade
                 gr.FillEllipse(myBrush, new Rectangle(x - point_radius, y - point_radius,
                    2 * point_radius, 2 * point_radius));
                 Point point = new Point(x, y);
-                point.cluster_number = color_number + 1;
+                point.cluster_numbers[0] = color_number + 1;
                 points.Add(point);
             }
         }
@@ -145,7 +145,7 @@ namespace Clustering_quality_grade
             else
             {
                 for (int i = 0; i < points.Count; i++)
-                    ClusterInfo.Add(((Point)points[i]).cluster_number);
+                    ClusterInfo.Add(((Point)points[i]).cluster_numbers[0]);
             }
             return ClusterInfo;
         }
@@ -282,7 +282,7 @@ namespace Clustering_quality_grade
             {
                 int x = rand.Next(x0, x0+width);
                 int y = rand.Next(y0, y0+height);
-                FuzzyClusteringPoint point = new FuzzyClusteringPoint(x, y);
+                Point point = new Point(x, y);
                 points.Add(point);
                 gr.DrawString((points.Count-1).ToString(), new Font("Arial", 8), brush, x-6, y-15);
                 gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
@@ -328,19 +328,19 @@ namespace Clustering_quality_grade
                 {
                     x=((int)p1.coordinates[0]+(int)p2.coordinates[0])/2;
                     y=((int)p1.coordinates[1]+(int)p2.coordinates[1])/2;
-                    FuzzyClusteringPoint p12 = new FuzzyClusteringPoint(x, y);
+                    Point p12 = new Point(x, y);
                     gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
                         2 * point_radius, 2 * point_radius));
                     points.Add(p12);
                     x = ((int)p1.coordinates[0] + (int)p3.coordinates[0]) / 2;
                     y = ((int)p1.coordinates[1] + (int)p3.coordinates[1]) / 2;
-                    FuzzyClusteringPoint p13 = new FuzzyClusteringPoint(x, y);
+                    Point p13 = new Point(x, y);
                     gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
                         2 * point_radius, 2 * point_radius));
                     points.Add(p13);
                     x = ((int)p2.coordinates[0] + (int)p3.coordinates[0]) / 2;
                     y = ((int)p2.coordinates[1] + (int)p3.coordinates[1]) / 2;
-                    FuzzyClusteringPoint p23 = new FuzzyClusteringPoint(x, y);
+                    Point p23 = new Point(x, y);
                     gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
                         2 * point_radius, 2 * point_radius));
                     points.Add(p23);
@@ -361,11 +361,11 @@ namespace Clustering_quality_grade
             SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
             for (int i = 0; i < points.Count; i++)
             {
-                if (((Point)points[i]).cluster_number == 1)
+                if ((int)((Point)points[i]).cluster_numbers[0] == 1)
                     myBrush.Color = Color.Red;
-                else if (((Point)points[i]).cluster_number == 2)
+                else if ((int)((Point)points[i]).cluster_numbers[0] == 2)
                     myBrush.Color = Color.Green;
-                else if (((Point)points[i]).cluster_number == 3)
+                else if ((int)((Point)points[i]).cluster_numbers[0] == 3)
                     myBrush.Color = Color.Blue;
                 else
                     myBrush.Color = Color.Black;
@@ -383,8 +383,8 @@ namespace Clustering_quality_grade
             SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
             for (int i = 0; i < points.Count; i++)
             {
-                int x = (int)((FuzzyClusteringPoint)points[i]).coordinates[0];
-                int y = (int)((FuzzyClusteringPoint)points[i]).coordinates[1];
+                int x = (int)((Point)points[i]).coordinates[0];
+                int y = (int)((Point)points[i]).coordinates[1];
                 int start_angle = 0;
                 for(int j=0; j<((ArrayList)MembershipMatrix[0]).Count; j++)
                 {
@@ -420,7 +420,7 @@ namespace Clustering_quality_grade
                     DendrogramForm dendrogram_form = new DendrogramForm(dendrogram);
                     dendrogram_form.Show();
                 }
-                if(form.isFuzzyClustering)
+                else if(form.isFuzzyClustering)
                 {
                     isHierarchicalClustering = false;
                     isFuzzyClustering = true;
@@ -435,6 +435,44 @@ namespace Clustering_quality_grade
                     ColorizeClusters();
                 }
             }
+        }
+        private void LoadTestButton_Click(object sender, EventArgs e)
+        {
+            FileStream file = new FileStream("Test.txt", FileMode.Open, FileAccess.Read);
+            StreamReader reader = new StreamReader(file);
+            ArrayList test_points = new ArrayList();
+            ArrayList ClassInfo = new ArrayList();
+            while (true)
+            {
+                string line = reader.ReadLine();
+                if (line == null)
+                    break;
+                Point point = new Point();
+                int begin = 0;
+                while (true)
+                {
+                    int end;
+                    for(end=begin; line[end]!=','; end++)
+                    {
+                        if (end == line.Length - 1)
+                            break;
+                    }
+                    if (end == line.Length - 1)
+                        break;
+                    end--;
+                    string number_str = line.Substring(begin, end - begin+1);
+                    double number = double.Parse(number_str);
+                    point.coordinates.Add(number);
+                    begin = end + 2;
+                }
+                test_points.Add(point);
+                string class_number_str = line.Substring(begin, line.Length-begin);
+                int class_number = int.Parse(class_number_str);
+                ClassInfo.Add(class_number+2);
+            }
+            file.Close();
+            TestForm form = new TestForm(test_points, ClassInfo);
+            form.ShowDialog();
         }
     }
 }

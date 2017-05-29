@@ -208,7 +208,7 @@ namespace Clustering_quality_grade
             temp_covariance_matrix.Clear();
             temp_weights.Clear();
             probabilities.Clear();
-            int dimension=((Point)points[0]).coordinates.Count;
+            int dimension = ((Point)points[0]).coordinates.Count;
             for (int i = 0; i < dimension; i++)
             {
                 ArrayList row = new ArrayList();
@@ -304,9 +304,11 @@ namespace Clustering_quality_grade
                     ArrayList row3 = new ArrayList();
                     for (int k = 0; k < dimension; k++)
                     {
-                        row3.Add(((int)((Point)points[j]).coordinates[k]) - (double)((ArrayList)expected_value_matrix[k])[i]);
+                        row3.Add(((int)((Point)points[j]).coordinates[k]) - 
+                            (double)((ArrayList)expected_value_matrix[k])[i]);
                         ArrayList row1 = new ArrayList();
-                        row1.Add(((int)((Point)points[j]).coordinates[k]) - (double)((ArrayList)expected_value_matrix[k])[i]);
+                        row1.Add(((int)((Point)points[j]).coordinates[k]) - 
+                            (double)((ArrayList)expected_value_matrix[k])[i]);
                         matrix1.Add(row1);
                     }
                     matrix3.Add(row3);
@@ -361,7 +363,7 @@ namespace Clustering_quality_grade
                     }
                 }
                 Point point = (Point)points[i];
-                point.cluster_number = cluster_number;
+                point.cluster_numbers[0] = cluster_number;
                 result_points.Add(point);
             }
             return result_points;

@@ -33,6 +33,7 @@
             this.TimeCalculationButton = new System.Windows.Forms.Button();
             this.clustering_button = new System.Windows.Forms.Button();
             this.Non_clustered_button = new System.Windows.Forms.Button();
+            this.LoadTestButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,11 +87,22 @@
             this.Non_clustered_button.UseVisualStyleBackColor = true;
             this.Non_clustered_button.Click += new System.EventHandler(this.Non_clustered_button_Click);
             // 
+            // LoadTestButton
+            // 
+            this.LoadTestButton.Location = new System.Drawing.Point(566, 224);
+            this.LoadTestButton.Name = "LoadTestButton";
+            this.LoadTestButton.Size = new System.Drawing.Size(139, 47);
+            this.LoadTestButton.TabIndex = 11;
+            this.LoadTestButton.Text = "Загрузка множетсва для эксперимента";
+            this.LoadTestButton.UseVisualStyleBackColor = true;
+            this.LoadTestButton.Click += new System.EventHandler(this.LoadTestButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(717, 575);
+            this.Controls.Add(this.LoadTestButton);
             this.Controls.Add(this.clustering_button);
             this.Controls.Add(this.Non_clustered_button);
             this.Controls.Add(this.TimeCalculationButton);
@@ -109,5 +121,6 @@
         private System.Windows.Forms.Button TimeCalculationButton;
         private System.Windows.Forms.Button clustering_button;
         private System.Windows.Forms.Button Non_clustered_button;
+        private System.Windows.Forms.Button LoadTestButton;
     }
 }

@@ -20,10 +20,6 @@ namespace Clustering_quality_grade
             double nij=0, ni=0;
             for (int i = 0; i < ClusterInfo.Count; i++ )
             {
-                if ((int)ClusterInfo[i] == 0)
-                    continue;
-                if ((int)ClassInfo[i] == 0)
-                    continue;
                 if (((int)ClusterInfo[i] == ClusterNumber) && ((int)ClassInfo[i] == ClassNumber))
                     nij++;
                 if ((int)ClusterInfo[i] == ClusterNumber)
@@ -36,10 +32,6 @@ namespace Clustering_quality_grade
             double nij = 0, nj = 0;
             for (int i = 0; i < ClusterInfo.Count; i++)
             {
-                if ((int)ClusterInfo[i] == 0)
-                    continue;
-                if ((int)ClassInfo[i] == 0)
-                    continue;
                 if (((int)ClusterInfo[i] == ClusterNumber) && ((int)ClassInfo[i] == ClassNumber))
                     nij++;
                 if ((int)ClassInfo[i] == ClassNumber)

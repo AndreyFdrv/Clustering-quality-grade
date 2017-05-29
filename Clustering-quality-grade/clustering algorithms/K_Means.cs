@@ -38,8 +38,9 @@ namespace Clustering_quality_grade
                         min_distance_index = j;
                     }
                 }
-                Point point=new Point((int)((Point)points[i]).coordinates[0], (int)((Point)points[i]).coordinates[1]);
-                point.cluster_number=min_distance_index+1;
+                Point point = new Point((int)((Point)points[i]).coordinates[0],
+                    (int)((Point)points[i]).coordinates[1]);
+                point.cluster_numbers.Add(min_distance_index+1);
                 points.RemoveAt(i);
                 points.Insert(i, point);
             }
@@ -53,7 +54,7 @@ namespace Clustering_quality_grade
                 int count = 0;
                 for(int j=0; j<points.Count; j++)
                 {
-                    if(((Point)points[j]).cluster_number==i+1)
+                    if ((int)((Point)points[j]).cluster_numbers[0] == i + 1)
                     {
                         sum_x += (int)((Point)points[j]).coordinates[0];
                         sum_y += (int)((Point)points[j]).coordinates[1];
@@ -107,7 +108,7 @@ namespace Clustering_quality_grade
                 {
                     for(int j=0; j<points.Count; j++)
                     {
-                        if(((Point)points[j]).cluster_number==i)
+                        if ((int)((Point)points[j]).cluster_numbers[0] == i)
                         {
                             isEmptyClusters = false;
                             break;

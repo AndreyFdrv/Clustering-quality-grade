@@ -45,11 +45,11 @@ namespace Clustering_quality_grade
             for(int i=0; i<((ArrayList)cur_clusters_list[cluster_number1]).Count; i++)
             {
                 int point1_index = (int)((ArrayList)cur_clusters_list[cluster_number1])[i];
-                FuzzyClusteringPoint point1 = ((FuzzyClusteringPoint)points[point1_index]);
+                Point point1 = ((Point)points[point1_index]);
                 for(int j=0; j<((ArrayList)cur_clusters_list[cluster_number2]).Count; j++)
                 {
                     int point2_index = (int)((ArrayList)cur_clusters_list[cluster_number2])[j];
-                    FuzzyClusteringPoint point2 = ((FuzzyClusteringPoint)points[point2_index]);
+                    Point point2 = ((Point)points[point2_index]);
                     double distance = 0;
                     for (int k = 0; k < point1.coordinates.Count; k++)
                         distance += Math.Pow((int)point1.coordinates[k] - (int)point2.coordinates[k], 2);

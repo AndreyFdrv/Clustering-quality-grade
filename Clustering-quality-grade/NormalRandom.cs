@@ -34,7 +34,6 @@ namespace Clustering_quality_grade
             _available = true;
             return temp1 * Math.Cos(temp2);
         }
-
         public double RandomGauss(double mu, double sigma)
         {
             return mu + sigma * RandomGauss();

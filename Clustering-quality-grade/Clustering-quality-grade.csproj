@@ -67,43 +67,41 @@
     <Compile Include="modifications of quality assessment criterions\Hierarchical_Rand_Jaccard_FM.cs" />
     <Compile Include="modifications of quality assessment criterions\Fuzzy_Rand_Jaccard_FM.cs" />
     <Compile Include="NormalRandom.cs" />
-    <Compile Include="FuzzyClusteringPoint.cs" />
-    <Compile Include="quality assessment criterions\Calinski_Harabasz_criterion.cs" />
-    <Compile Include="quality assessment criterions\Davies_Bouldin_index.cs" />
+    <Compile Include="Point.cs" />
     <Compile Include="ClusteringForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ClusteringForm.Designer.cs">
       <DependentUpon>ClusteringForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="quality assessment criterions\Maulik_Bandyopadhyay_index.cs" />
-    <Compile Include="quality assessment criterions\RS_Index.cs" />
-    <Compile Include="quality assessment criterions\Dunn_index.cs" />
     <Compile Include="quality assessment criterions\F1_meassure.cs" />
-    <Compile Include="quality assessment criterions\Hubert_Gamma_Statistic.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="quality assessment criterions\Modified_Hubert_Gamma_Statistic.cs" />
-    <Compile Include="quality assessment criterions\Normalized_Hubert_Gamma_Statistic.cs" />
-    <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="quality assessment criterions\Rand_Jaccard_FM.cs" />
-    <Compile Include="quality assessment criterions\RMSSTD.cs" />
-    <Compile Include="quality assessment criterions\Scatter_Density_index.cs" />
-    <Compile Include="quality assessment criterions\Scatter_Distance_index.cs" />
-    <Compile Include="quality assessment criterions\SilhouetteIndex.cs" />
+    <Compile Include="TestClusteringForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestClusteringForm.Designer.cs">
+      <DependentUpon>TestClusteringForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TimeCalculationForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TimeCalculationForm.Designer.cs">
       <DependentUpon>TimeCalculationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="quality assessment criterions\VNND_Index.cs" />
     <EmbeddedResource Include="ClusteringForm.resx">
       <DependentUpon>ClusteringForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -126,6 +124,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TestClusteringForm.resx">
+      <DependentUpon>TestClusteringForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TimeCalculationForm.resx">
       <DependentUpon>TimeCalculationForm.cs</DependentUpon>
     </EmbeddedResource>

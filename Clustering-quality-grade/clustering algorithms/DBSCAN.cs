@@ -20,7 +20,7 @@ namespace Clustering_quality_grade
         private void CarryPointToCluster(int point_number, int cluster_number)
         {
             Point point = (Point)points[point_number];
-            point.cluster_number = cluster_number;
+            point.cluster_numbers[0] = cluster_number;
             points.RemoveAt(point_number);
             points.Insert(point_number, point);
         }
@@ -37,7 +37,7 @@ namespace Clustering_quality_grade
             {
                 double distance = 0;
                 for (int j = 0; j < dimension; j++)
-                    distance += Math.Pow((int)((Point)points[i]).coordinates[j] - 
+                    distance += Math.Pow((int)((Point)points[i]).coordinates[j] -
                         (int)((Point)points[point_number]).coordinates[j], 2);
                 distance = Math.Sqrt(distance);
                 if (distance <= eps)
@@ -68,13 +68,13 @@ namespace Clustering_quality_grade
             for(int i=0; i<neightbour_points.Count; i++)
             {
                 int cur_point_number=(int)neightbour_points[i];
-                if (((Point)points[cur_point_number]).cluster_number == -1)
+                if ((int)((Point)points[cur_point_number]).cluster_numbers[0] == -1)
                 {
                     ArrayList new_neightbour_points = NeightbourPointsNumbers(cur_point_number);
                     if (new_neightbour_points.Count >= min_points_count)
                         CombineNeightbourPoints(ref neightbour_points, new_neightbour_points);
                 }
-                if (((Point)points[cur_point_number]).cluster_number < 1)
+                if ((int)((Point)points[cur_point_number]).cluster_numbers[0] < 1)
                     CarryPointToCluster(cur_point_number, cluster_number);
             }
         }
@@ -84,7 +84,7 @@ namespace Clustering_quality_grade
             MakeAllPointsUnvisited();
             for (int i = 0; i < points.Count; i++)
             {
-                if (((Point)points[i]).cluster_number != -1)
+                if ((int)((Point)points[i]).cluster_numbers[0] != -1)
                     continue;
                 ArrayList neightbour_points = NeightbourPointsNumbers(i);
                 if (neightbour_points.Count < min_points_count)

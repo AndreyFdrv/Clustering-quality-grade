@@ -7,21 +7,26 @@ using System.Collections;
 
 namespace Clustering_quality_grade
 {
-    struct Point
+    class Point
     {
-            public ArrayList coordinates;
-            public int cluster_number;
-            public Point(int x, int y)
-            {
-                coordinates = new ArrayList();
-                coordinates.Add(x);
-                coordinates.Add(y);
-                cluster_number = 0;
-            }
-            public Point(ArrayList coordinates, int cluster_number)
-            {
-                this.coordinates = coordinates;
-                this.cluster_number = cluster_number;
-            }
+        public ArrayList coordinates;
+        public ArrayList cluster_numbers;
+        public Point()
+        {
+            coordinates = new ArrayList();
+            cluster_numbers = new ArrayList();
+        }
+        public Point(int x, int y)
+        {
+            coordinates = new ArrayList();
+            coordinates.Add(x);
+            coordinates.Add(y);
+            cluster_numbers = new ArrayList();
+        }
+        public Point(ArrayList coordinates, ArrayList cluster_numbers)
+        {
+            this.coordinates = coordinates;
+            this.cluster_numbers = cluster_numbers;
+        }
     }
 }
