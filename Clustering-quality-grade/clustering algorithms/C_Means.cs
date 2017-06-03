@@ -28,7 +28,7 @@ namespace Clustering_quality_grade
                     for (int k = 0; k < points.Count; k++)
                     {
                         sum1 += Math.Pow((double)((ArrayList)MembershipMatrix[k])[i], 2) *
-                            (int)((Point)points[k]).coordinates[j];
+                            (double)((Point)points[k]).coordinates[j];
                         sum2 += Math.Pow((double)((ArrayList)MembershipMatrix[k])[i], 2);
                     }
                     row.Add(sum1 / sum2);
@@ -42,7 +42,7 @@ namespace Clustering_quality_grade
             double result = 0;
             for(int i=0; i<dimension; i++)
                 result += Math.Pow((double)((ArrayList)clusters_centers[cluster_number])[i] -
-                    (int)((Point)points[point_number]).coordinates[i], 2);
+                    (double)((Point)points[point_number]).coordinates[i], 2);
             result = Math.Sqrt(result);
             return result;
         }

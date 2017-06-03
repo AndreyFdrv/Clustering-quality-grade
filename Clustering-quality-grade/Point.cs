@@ -16,7 +16,7 @@ namespace Clustering_quality_grade
             coordinates = new ArrayList();
             cluster_numbers = new ArrayList();
         }
-        public Point(int x, int y)
+        public Point(double x, double y)
         {
             coordinates = new ArrayList();
             coordinates.Add(x);

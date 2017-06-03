@@ -22,7 +22,7 @@ namespace Clustering_quality_grade
                 for (int j = i + 1; j < ClusterInfo.Count; j++)
                 {
                     bool isCluster=false;
-                    for (int k = 0; k < ((ArrayList)ClusterInfo[i]).Count; i++)
+                    for (int k = 0; k < ((ArrayList)ClusterInfo[i]).Count; k++)
                     {
                         if(((ArrayList)ClusterInfo[j]).Contains(((ArrayList)ClusterInfo[i])[k]))
                         {
@@ -62,7 +62,7 @@ namespace Clustering_quality_grade
                         }
                     }
                     bool isClass = false;
-                    for (int k = 0; k < ((ArrayList)ClassInfo[i]).Count; i++)
+                    for (int k = 0; k < ((ArrayList)ClassInfo[i]).Count; k++)
                     {
                         if (((ArrayList)ClassInfo[j]).Contains(((ArrayList)ClassInfo[i])[k]))
                         {
@@ -93,7 +93,7 @@ namespace Clustering_quality_grade
                         }
                     }
                     bool isClass = false;
-                    for (int k = 0; k < ((ArrayList)ClassInfo[i]).Count; i++)
+                    for (int k = 0; k < ((ArrayList)ClassInfo[i]).Count; k++)
                     {
                         if (((ArrayList)ClassInfo[j]).Contains(((ArrayList)ClassInfo[i])[k]))
                         {
@@ -124,7 +124,7 @@ namespace Clustering_quality_grade
                         }
                     }
                     bool isClass = false;
-                    for (int k = 0; k < ((ArrayList)ClassInfo[i]).Count; i++)
+                    for (int k = 0; k < ((ArrayList)ClassInfo[i]).Count; k++)
                     {
                         if (((ArrayList)ClassInfo[j]).Contains(((ArrayList)ClassInfo[i])[k]))
                         {

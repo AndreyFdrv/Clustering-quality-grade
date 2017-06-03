@@ -124,6 +124,7 @@
             this.Controls.Add(this.k_means_rb);
             this.Controls.Add(this.label1);
             this.Name = "ClusteringForm";
+            this.Load += new System.EventHandler(this.ClusteringForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

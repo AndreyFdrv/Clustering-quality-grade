@@ -17,17 +17,16 @@ namespace Clustering_quality_grade
         public bool isHierarchicalClustering = false;
         public bool isFuzzyClustering = false;
         public bool isClustered=false;
-        private int width;
-        private int height;
-        private int noise_count;
+        private ArrayList LowerBorders, UpperBorders;
         ArrayList MembershipMatrix;
-        public ClusteringForm(ArrayList points, int noise_count, int width, int height)
+        bool isForExperiment;
+        public ClusteringForm(ArrayList points, ArrayList LowerBorders, ArrayList UpperBorders, bool isForExperiment=false)
         {
             InitializeComponent();
             this.points = points;
-            this.noise_count = noise_count;
-            this.width = width;
-            this.height = height;
+            this.LowerBorders = LowerBorders;
+            this.UpperBorders = UpperBorders;
+            this.isForExperiment = isForExperiment;
         }
         public ArrayList getPoints()
         {
@@ -45,12 +44,16 @@ namespace Clustering_quality_grade
         {
             if (k_means_rb.Checked)
             {
-                K_Means algorithm = new K_Means(points, width, height);
+                K_Means algorithm = new K_Means(points, LowerBorders, UpperBorders);
                 points = algorithm.Cluster();
             }    
             else if (DBSCAN_rb.Checked)
             {
-                DBSCAN algorithm = new DBSCAN(points);
+                DBSCAN algorithm;
+                if(isForExperiment)
+                    algorithm = new DBSCAN(points, 1, 3);
+                else
+                    algorithm = new DBSCAN(points);
                 points = algorithm.Cluster();
             }   
             else if (neighbor_method_rb.Checked)
@@ -67,11 +70,16 @@ namespace Clustering_quality_grade
             }
             else if (EM_algorithm_rb.Checked)
             {
-                EM_Clustering algorithm = new EM_Clustering(points, noise_count);
+                EM_Clustering algorithm = new EM_Clustering(points);
                 points = algorithm.Cluster();
             }
             isClustered=true;
             this.Close();
+        }
+
+        private void ClusteringForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

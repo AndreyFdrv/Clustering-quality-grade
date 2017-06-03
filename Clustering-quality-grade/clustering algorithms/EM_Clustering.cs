@@ -11,16 +11,14 @@ namespace Clustering_quality_grade
         private ArrayList points;
         private int clusters_count;
         private double log_likelihood_deviation = 0.01;
-        private long max_iteration_number = 10000;
+        private long max_iteration_number = 5;//10000;
         private ArrayList expected_value_matrix = new ArrayList();
         private ArrayList covariance_matrix = new ArrayList();
         private ArrayList weights = new ArrayList();
-        private int noise_count;
-        public EM_Clustering(ArrayList points, int noise_count, int clusters_count = 3)
+        public EM_Clustering(ArrayList points, int clusters_count = 3)
         {
             this.points = points;
             this.clusters_count = clusters_count;
-            this.noise_count = noise_count;
         }
         private ArrayList MatrixMultiplication(ArrayList matrix1, ArrayList matrix2)
         {
@@ -175,13 +173,13 @@ namespace Clustering_quality_grade
             for(int i=0; i<((Point)points[0]).coordinates.Count; i++)
             {
                 ArrayList row = new ArrayList();
-                int cluster_size = (points.Count-noise_count) / clusters_count;
+                int cluster_size = (points.Count) / clusters_count;
                 for(int j=0; j<clusters_count; j++)
                 {
                     double sum = 0;
                     for (int k = 0; k < cluster_size; k++)
                     {
-                        sum += (double)(int)((Point)points[j * cluster_size + k]).coordinates[i];
+                        sum += (double)((Point)points[j * cluster_size + k]).coordinates[i];
                     }
                     row.Add(sum / cluster_size);
                 }
@@ -243,9 +241,9 @@ namespace Clustering_quality_grade
                     ArrayList row1 = new ArrayList();
                     for (int k = 0; k < dimension; k++)
                     {
-                        row1.Add(((int)((Point)points[i]).coordinates[k]) - (double)((ArrayList)expected_value_matrix[k])[j]);
+                        row1.Add(((double)((Point)points[i]).coordinates[k]) - (double)((ArrayList)expected_value_matrix[k])[j]);
                         ArrayList row3 = new ArrayList();
-                        row3.Add(((int)((Point)points[i]).coordinates[k]) - (double)((ArrayList)expected_value_matrix[k])[j]);
+                        row3.Add(((double)((Point)points[i]).coordinates[k]) - (double)((ArrayList)expected_value_matrix[k])[j]);
                         matrix3.Add(row3);
                     }
                     matrix1.Add(row1);
@@ -271,7 +269,7 @@ namespace Clustering_quality_grade
                 for(int k=0; k<dimension; k++)
                 {
                     ArrayList row=new ArrayList();
-                    row.Add((double)(int)((Point)points[i]).coordinates[k]);
+                    row.Add((double)((Point)points[i]).coordinates[k]);
                     coordinates_matrix.Add(row);
                 }
                 ArrayList weight_probabilities_row_matrix=new ArrayList();
@@ -304,10 +302,10 @@ namespace Clustering_quality_grade
                     ArrayList row3 = new ArrayList();
                     for (int k = 0; k < dimension; k++)
                     {
-                        row3.Add(((int)((Point)points[j]).coordinates[k]) - 
+                        row3.Add(((double)((Point)points[j]).coordinates[k]) - 
                             (double)((ArrayList)expected_value_matrix[k])[i]);
                         ArrayList row1 = new ArrayList();
-                        row1.Add(((int)((Point)points[j]).coordinates[k]) - 
+                        row1.Add(((double)((Point)points[j]).coordinates[k]) - 
                             (double)((ArrayList)expected_value_matrix[k])[i]);
                         matrix1.Add(row1);
                     }
@@ -363,7 +361,8 @@ namespace Clustering_quality_grade
                     }
                 }
                 Point point = (Point)points[i];
-                point.cluster_numbers[0] = cluster_number;
+                point.cluster_numbers.Clear();
+                point.cluster_numbers.Add(cluster_number);
                 result_points.Add(point);
             }
             return result_points;

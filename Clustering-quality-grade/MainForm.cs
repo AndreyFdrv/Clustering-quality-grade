@@ -36,28 +36,12 @@ namespace Clustering_quality_grade
             {
                 int r = rand.Next(0, radius);
                 double alpha = rand.Next(0, 359);
-                int x =(int)center.coordinates[0]+(int)(r * Math.Cos(alpha));
-                int y =(int)center.coordinates[1]+(int)(r * Math.Sin(alpha));
-                gr.FillEllipse(myBrush, new Rectangle(x - point_radius, y - point_radius,
+                double x =(double)center.coordinates[0]+(r * Math.Cos(alpha));
+                double y =(double)center.coordinates[1]+(r * Math.Sin(alpha));
+                gr.FillEllipse(myBrush, new Rectangle((int)x - point_radius, (int)y - point_radius,
                    2 * point_radius, 2 * point_radius));
-                if (isFuzzyClustering)
-                {
-                    Point point = new Point(x, y);
-                    points.Add(point);
-                }
-                else
-                {
-                    Point point = new Point(x, y);
-                    if (myBrush.Color == Color.Red)
-                        point.cluster_numbers.Add(1);
-                    else if (myBrush.Color == Color.Green)
-                        point.cluster_numbers.Add(2);
-                    else if (myBrush.Color == Color.Blue)
-                        point.cluster_numbers.Add(3);
-                    else
-                        point.cluster_numbers.Add(0);
-                    points.Add(point);
-                }
+                Point point = new Point((double)x, (double)y);
+                points.Add(point);
             }
         }
         void CreateNoise(SolidBrush brush)
@@ -68,31 +52,7 @@ namespace Clustering_quality_grade
                 int y = rand.Next(0, pictureBox.Height);
                 gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
                    2 * point_radius, 2 * point_radius));
-                Point point = new Point(x, y);
-                if (brush.Color == Color.Red)
-                    point.cluster_numbers.Add(1);
-                else if (brush.Color == Color.Green)
-                    point.cluster_numbers.Add(2);
-                else if (brush.Color == Color.Blue)
-                    point.cluster_numbers.Add(3);
-                else
-                    point.cluster_numbers.Add(0);
-                points.Add(point);
-            }
-        }
-        void CreateNormalDistributionCluster(Point center, int radius)
-        {
-            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
-            NormalRandom nr = new NormalRandom();
-            for (int i = 0; i < cluster_size; i++)
-            {
-                int dispersion=rand.Next(10, 30);
-                double x = nr.RandomGauss((int)center.coordinates[0], dispersion);
-                dispersion = rand.Next(10, 30);
-                double y = nr.RandomGauss((int)center.coordinates[1], dispersion);
-                gr.FillEllipse(myBrush, new Rectangle((int)x - point_radius, (int)y - point_radius,
-                   2 * point_radius, 2 * point_radius));
-                Point point = new Point((int)x, (int)y);
+                Point point = new Point((double)x, (double)y);
                 points.Add(point);
             }
         }
@@ -145,7 +105,11 @@ namespace Clustering_quality_grade
             else
             {
                 for (int i = 0; i < points.Count; i++)
-                    ClusterInfo.Add(((Point)points[i]).cluster_numbers[0]);
+                {
+                    ArrayList row = new ArrayList();
+                    row.Add(((Point)points[i]).cluster_numbers[0]);
+                    ClusterInfo.Add(row);
+                }
             }
             return ClusterInfo;
         }
@@ -194,13 +158,29 @@ namespace Clustering_quality_grade
             else
             {
                 for (int i = 0; i < cluster_size; i++)
-                    ClassInfo.Add(1);
+                {
+                    ArrayList row = new ArrayList();
+                    row.Add(1);
+                    ClassInfo.Add(row);
+                }
                 for (int i = cluster_size; i < 2 * cluster_size; i++)
-                    ClassInfo.Add(2);
+                {
+                    ArrayList row = new ArrayList();
+                    row.Add(2);
+                    ClassInfo.Add(row);
+                }
                 for (int i = 2 * cluster_size; i < 3 * cluster_size; i++)
-                    ClassInfo.Add(3);
+                {
+                    ArrayList row = new ArrayList();
+                    row.Add(3);
+                    ClassInfo.Add(row);
+                }
                 for (int i = 3 * cluster_size; i < 3 * cluster_size + noise_count; i++)
-                    ClassInfo.Add(0);
+                {
+                    ArrayList row = new ArrayList();
+                    row.Add(0);
+                    ClassInfo.Add(row);
+                }
             }
             return ClassInfo;
         }
@@ -232,37 +212,13 @@ namespace Clustering_quality_grade
             {
                 ArrayList ClusterInfo = CreateClusterInfo();
                 ArrayList ClassInfo = CreateClassInfo();
-                F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
+                Density_F1_meassure f1_meassure = new Density_F1_meassure(ClusterInfo, ClassInfo);
                 output = "F1-мера: " + f1_meassure.F1() + "\r\n";
-                Rand_Jaccard_FM rand_jaccard_fm = new Rand_Jaccard_FM(ClusterInfo, ClassInfo);
+                Density_Rand_Jaccard_FM rand_jaccard_fm = new Density_Rand_Jaccard_FM(ClusterInfo, ClassInfo);
                 output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
                 output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
                 output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
             }
-            /*Calinski_Harabasz_criterion CHC = new Calinski_Harabasz_criterion(points);
-            output += "Критерий Calinski Harabasz: " + CHC.compute_criterion() + "\r\n";
-            Dunn_index dunn = new Dunn_index(points);
-            output += "Индекс Данна: " + dunn.compute() + "\r\n";
-            Davies_Bouldin_index DBI= new Davies_Bouldin_index(points);
-            output += "Индекс Девиса-Болдуина: " + DBI.compute() + "\r\n";
-            Scatter_Distance_index Scatter_Distance = new Scatter_Distance_index(points);
-            output += "Индекс Scatter-Distance: " + Scatter_Distance.compute(1) + "\r\n";
-            Scatter_Density_index Scatter_Density = new Scatter_Density_index(points);
-            output += "Индекс Scatter-Density: " + Scatter_Density.compute() + "\r\n";
-            RMSSTD rmsstd = new RMSSTD(points);
-            output += "Индекс RMSSTD: " + rmsstd.compute() + "\r\n";
-            Hubert_Gamma_Statistic hubert = new Hubert_Gamma_Statistic(points);
-            output += "Huberts's Г статистика: " + hubert.compute() + "\r\n";
-            Modified_Hubert_Gamma_Statistic modified_hubert = new Modified_Hubert_Gamma_Statistic(points);
-            output += "Модифицированная Huberts's Г статистика: " + modified_hubert.compute() + "\r\n";
-            Normalized_Hubert_Gamma_Statistic normalized_hubert = new Normalized_Hubert_Gamma_Statistic(points);
-            output += "Нормализованная Huberts's Г статистика: " + normalized_hubert.compute() + "\r\n";
-            RS_Index rs_index = new RS_Index(points);
-            output += "RS индекс: " + rs_index.compute() + "\r\n";
-            SilhouetteIndex silhouette_index = new SilhouetteIndex(points);
-            output += "Индекс Силуэта: " + silhouette_index.compute() + "\r\n";
-            Maulik_Bandyopadhyay_index maulik_bandyopadhyay_index = new Maulik_Bandyopadhyay_index(points);
-            output += "Индекс Маулика-Бандиопадия: " + maulik_bandyopadhyay_index.compute() + "\r\n";*/
             MessageBox.Show(output);
         }
 
@@ -282,7 +238,7 @@ namespace Clustering_quality_grade
             {
                 int x = rand.Next(x0, x0+width);
                 int y = rand.Next(y0, y0+height);
-                Point point = new Point(x, y);
+                Point point = new Point((double)x, (double)y);
                 points.Add(point);
                 gr.DrawString((points.Count-1).ToString(), new Font("Arial", 8), brush, x-6, y-15);
                 gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
@@ -326,20 +282,20 @@ namespace Clustering_quality_grade
                 CreateCluster(p3, radius, brush, form.isForFuzzyClustering);
                 if(form.isForFuzzyClustering)
                 {
-                    x=((int)p1.coordinates[0]+(int)p2.coordinates[0])/2;
-                    y=((int)p1.coordinates[1]+(int)p2.coordinates[1])/2;
+                    x = (int)(((double)p1.coordinates[0] + (double)p2.coordinates[0]) / 2);
+                    y = (int)(((double)p1.coordinates[1] + (double)p2.coordinates[1]) / 2);
                     Point p12 = new Point(x, y);
                     gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
                         2 * point_radius, 2 * point_radius));
                     points.Add(p12);
-                    x = ((int)p1.coordinates[0] + (int)p3.coordinates[0]) / 2;
-                    y = ((int)p1.coordinates[1] + (int)p3.coordinates[1]) / 2;
+                    x = (int)(((double)p1.coordinates[0] + (double)p3.coordinates[0]) / 2);
+                    y = (int)(((double)p1.coordinates[1] + (double)p3.coordinates[1]) / 2);
                     Point p13 = new Point(x, y);
                     gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
                         2 * point_radius, 2 * point_radius));
                     points.Add(p13);
-                    x = ((int)p2.coordinates[0] + (int)p3.coordinates[0]) / 2;
-                    y = ((int)p2.coordinates[1] + (int)p3.coordinates[1]) / 2;
+                    x = (int)(((double)p2.coordinates[0] + (double)p3.coordinates[0]) / 2);
+                    y = (int)(((double)p2.coordinates[1] + (double)p3.coordinates[1]) / 2);
                     Point p23 = new Point(x, y);
                     gr.FillEllipse(brush, new Rectangle(x - point_radius, y - point_radius,
                         2 * point_radius, 2 * point_radius));
@@ -369,8 +325,8 @@ namespace Clustering_quality_grade
                     myBrush.Color = Color.Blue;
                 else
                     myBrush.Color = Color.Black;
-                int x = (int)((Point)points[i]).coordinates[0];
-                int y = (int)((Point)points[i]).coordinates[1];
+                int x = (int)(double)((Point)points[i]).coordinates[0];
+                int y = (int)(double)((Point)points[i]).coordinates[1];
                 gr.FillEllipse(myBrush, new Rectangle(x - point_radius, y - point_radius,
                    2 * point_radius, 2 * point_radius));
             }
@@ -383,8 +339,8 @@ namespace Clustering_quality_grade
             SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
             for (int i = 0; i < points.Count; i++)
             {
-                int x = (int)((Point)points[i]).coordinates[0];
-                int y = (int)((Point)points[i]).coordinates[1];
+                double x = (double)((Point)points[i]).coordinates[0];
+                double y = (double)((Point)points[i]).coordinates[1];
                 int start_angle = 0;
                 for(int j=0; j<((ArrayList)MembershipMatrix[0]).Count; j++)
                 {
@@ -398,7 +354,7 @@ namespace Clustering_quality_grade
                         myBrush.Color = Color.Black;
                     double membership = (double)((ArrayList)MembershipMatrix[i])[j];
                     int end_angle = (int)(membership * 360);
-                    gr.FillPie(myBrush, new Rectangle(x - point_radius, y - point_radius,
+                    gr.FillPie(myBrush, new Rectangle((int)x - point_radius, (int)y - point_radius,
                         2 * point_radius, 2 * point_radius), start_angle, end_angle);
                     start_angle += end_angle;
                 }
@@ -408,7 +364,13 @@ namespace Clustering_quality_grade
         }
         private void clustering_button_Click(object sender, EventArgs e)
         {
-            ClusteringForm form = new ClusteringForm(points, noise_count, pictureBox.Width, pictureBox.Height);
+            ArrayList LowerBorders = new ArrayList();
+            LowerBorders.Add(0.0);
+            LowerBorders.Add(0.0);
+            ArrayList UpperBorders = new ArrayList();
+            UpperBorders.Add((double)pictureBox.Width);
+            UpperBorders.Add((double)pictureBox.Height);
+            ClusteringForm form = new ClusteringForm(points, LowerBorders, UpperBorders);
             form.ShowDialog();
             if (form.isClustered)
             {
@@ -442,13 +404,30 @@ namespace Clustering_quality_grade
             StreamReader reader = new StreamReader(file);
             ArrayList test_points = new ArrayList();
             ArrayList ClassInfo = new ArrayList();
+            string line = reader.ReadLine();
+            int dimension=0;
+            for (int i = 0; i < line.Length; i++)
+            {
+                if (line[i] == ',')
+                    dimension++;
+
+            }
+            reader.DiscardBufferedData();
+            reader.BaseStream.Position = 0;
+            ArrayList LowerBorders = new ArrayList();
+            for (int i = 0; i < dimension; i++)
+                LowerBorders.Add(Double.MaxValue);
+            ArrayList UpperBorders = new ArrayList();
+            for (int i = 0; i < dimension; i++)
+                UpperBorders.Add(-Double.MaxValue);
             while (true)
             {
-                string line = reader.ReadLine();
+                line = reader.ReadLine();
                 if (line == null)
                     break;
                 Point point = new Point();
                 int begin = 0;
+                int coordinate_number = 0;
                 while (true)
                 {
                     int end;
@@ -462,16 +441,23 @@ namespace Clustering_quality_grade
                     end--;
                     string number_str = line.Substring(begin, end - begin+1);
                     double number = double.Parse(number_str);
+                    if (number > (double)UpperBorders[coordinate_number])
+                        UpperBorders[coordinate_number] = number;
+                    if (number < (double)LowerBorders[coordinate_number])
+                        LowerBorders[coordinate_number] = number;
+                    coordinate_number++;
                     point.coordinates.Add(number);
                     begin = end + 2;
                 }
                 test_points.Add(point);
                 string class_number_str = line.Substring(begin, line.Length-begin);
                 int class_number = int.Parse(class_number_str);
-                ClassInfo.Add(class_number+2);
+                ArrayList row = new ArrayList();
+                row.Add(class_number + 2);
+                ClassInfo.Add(row);
             }
             file.Close();
-            TestForm form = new TestForm(test_points, ClassInfo);
+            TestForm form = new TestForm(test_points, ClassInfo, LowerBorders, UpperBorders);
             form.ShowDialog();
         }
     }

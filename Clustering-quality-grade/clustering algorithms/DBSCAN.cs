@@ -9,9 +9,9 @@ namespace Clustering_quality_grade
     class DBSCAN
     {
         private ArrayList points;//номер кластера 0 - шум, номер кластера -1 - непосещённая точка
-        private int eps;
+        private double eps;
         private int min_points_count;
-        public DBSCAN(ArrayList points, int eps=50, int min_points_count=3)
+        public DBSCAN(ArrayList points, double eps=50, int min_points_count=3)
         {
             this.points=points;
             this.eps=eps;
@@ -20,7 +20,8 @@ namespace Clustering_quality_grade
         private void CarryPointToCluster(int point_number, int cluster_number)
         {
             Point point = (Point)points[point_number];
-            point.cluster_numbers[0] = cluster_number;
+            point.cluster_numbers.Clear();
+            point.cluster_numbers.Add(cluster_number);
             points.RemoveAt(point_number);
             points.Insert(point_number, point);
         }
@@ -37,8 +38,8 @@ namespace Clustering_quality_grade
             {
                 double distance = 0;
                 for (int j = 0; j < dimension; j++)
-                    distance += Math.Pow((int)((Point)points[i]).coordinates[j] -
-                        (int)((Point)points[point_number]).coordinates[j], 2);
+                    distance += Math.Pow((double)((Point)points[i]).coordinates[j] -
+                        (double)((Point)points[point_number]).coordinates[j], 2);
                 distance = Math.Sqrt(distance);
                 if (distance <= eps)
                     result.Add(i);

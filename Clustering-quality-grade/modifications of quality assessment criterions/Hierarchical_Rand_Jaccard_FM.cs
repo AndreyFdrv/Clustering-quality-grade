@@ -62,43 +62,47 @@ namespace Clustering_quality_grade
         }
         private bool isInDifferentClusters(ArrayList ClustersList, int number_1, int number_2)
         {
-            bool isNumber1 = false;
-            int number1_cluster = 0;
+            ArrayList number1_clusters = new ArrayList();
             for (int i = 0; i < ClustersList.Count; i++)
             {
                 for (int j = 0; j < ((ArrayList)ClustersList[i]).Count; j++)
                 {
                     if ((int)((ArrayList)ClustersList[i])[j] == number_1)
                     {
-                        isNumber1 = true;
-                        number1_cluster = i + 1;
+                        number1_clusters.Add(i + 1);
                         break;
                     }
                 }
-                if (isNumber1)
-                    break;
             }
-            if (!isNumber1)
-                return false;
-            bool isNumber2 = false;
-            int number2_cluster = 0;
+            if (number1_clusters.Count > 1)
+                return true;
+            ArrayList number2_clusters = new ArrayList();
             for (int i = 0; i < ClustersList.Count; i++)
             {
                 for (int j = 0; j < ((ArrayList)ClustersList[i]).Count; j++)
                 {
-                    if ((int)((ArrayList)ClustersList[i])[j] == number_1)
+                    if ((int)((ArrayList)ClustersList[i])[j] == number_2)
                     {
-                        isNumber2 = true;
-                        number2_cluster = i + 1;
+                        number2_clusters.Add(i + 1);
                         break;
                     }
                 }
-                if (isNumber2)
-                    break;
             }
-            if (!isNumber2)
-                return false;
-            if (number1_cluster == number2_cluster)
+            if (number1_clusters.Count == 0)
+            {
+                if (number2_clusters.Count == 0)
+                    return false;
+                if (number2_clusters.Count != 0)
+                    return true;
+            }
+            else
+            {
+                if (number2_clusters.Count == 0)
+                    return true;
+            }
+            if (number1_clusters.Count > 1)
+                return true;
+            if ((int)number1_clusters[0] == (int)number2_clusters[0])
                 return false;
             return true;
         }

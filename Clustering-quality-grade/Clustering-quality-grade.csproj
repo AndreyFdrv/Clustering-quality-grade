@@ -62,11 +62,12 @@
     <Compile Include="GenerationTypes.Designer.cs">
       <DependentUpon>GenerationTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="modifications of quality assessment criterions\Density_F1_meassure.cs" />
     <Compile Include="modifications of quality assessment criterions\Fuzzy_F1_meassure.cs" />
     <Compile Include="modifications of quality assessment criterions\Hierarchical_F1_meassure.cs" />
     <Compile Include="modifications of quality assessment criterions\Hierarchical_Rand_Jaccard_FM.cs" />
     <Compile Include="modifications of quality assessment criterions\Fuzzy_Rand_Jaccard_FM.cs" />
-    <Compile Include="NormalRandom.cs" />
+    <Compile Include="modifications of quality assessment criterions\Density_Rand_Jaccard_FM.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="ClusteringForm.cs">
       <SubType>Form</SubType>
@@ -84,6 +85,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="quality assessment criterions\Rand_Jaccard_FM.cs" />
+    <Compile Include="QualityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QualityForm.Designer.cs">
+      <DependentUpon>QualityForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestClusteringForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +131,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="QualityForm.resx">
+      <DependentUpon>QualityForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestClusteringForm.resx">
       <DependentUpon>TestClusteringForm.cs</DependentUpon>
     </EmbeddedResource>

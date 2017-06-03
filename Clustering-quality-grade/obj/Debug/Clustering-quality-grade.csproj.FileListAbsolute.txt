@@ -26,3 +26,4 @@ C:\Users\michail\Desktop\ВКР\Clustering-quality-grade\Clustering-quality-grad
 C:\Users\Andrei\Documents\LETI\4.1\Диплом\Clustering-quality-grade\Clustering-quality-grade\obj\Debug\Clustering_quality_grade.DendrogramForm.resources
 C:\Users\Andrei\Documents\LETI\4.1\Диплом\Clustering-quality-grade\Clustering-quality-grade\obj\Debug\Clustering_quality_grade.TestForm.resources
 C:\Users\Andrei\Documents\LETI\4.1\Диплом\Clustering-quality-grade\Clustering-quality-grade\obj\Debug\Clustering_quality_grade.TestClusteringForm.resources
+C:\Users\Andrei\Documents\LETI\4.1\Диплом\Clustering-quality-grade\Clustering-quality-grade\obj\Debug\Clustering_quality_grade.QualityForm.resources

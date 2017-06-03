@@ -52,7 +52,7 @@ namespace Clustering_quality_grade
                     Point point2 = ((Point)points[point2_index]);
                     double distance = 0;
                     for (int k = 0; k < point1.coordinates.Count; k++)
-                        distance += Math.Pow((int)point1.coordinates[k] - (int)point2.coordinates[k], 2);
+                        distance += Math.Pow((double)point1.coordinates[k] - (double)point2.coordinates[k], 2);
                     distance = Math.Sqrt(distance);
                     if (distance < min_distance)
                         min_distance = distance;

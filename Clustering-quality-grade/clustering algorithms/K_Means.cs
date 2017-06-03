@@ -10,14 +10,13 @@ namespace Clustering_quality_grade
     {
         private ArrayList points;
         private int clusters_count;
-        private int width;
-        private int height;
-        public K_Means(ArrayList points, int width, int height, int clusters_count=3)
+        private ArrayList LowerBorders, UpperBorders;
+        public K_Means(ArrayList points, ArrayList LowerBorders, ArrayList UpperBorders, int clusters_count=3)
         {
             this.points = points;
             this.clusters_count = clusters_count;
-            this.width = width;
-            this.height = height;
+            this.LowerBorders = LowerBorders;
+            this.UpperBorders = UpperBorders;
         }
         private void ChangeClusters(ArrayList centers)
         {
@@ -25,22 +24,25 @@ namespace Clustering_quality_grade
             {
                 double min_distance = Double.MaxValue;
                 int min_distance_index=-1;
-                int x = (int)((Point)points[i]).coordinates[0];
-                int y = (int)((Point)points[i]).coordinates[1];
+                double x = (double)((Point)points[i]).coordinates[0];
+                double y = (double)((Point)points[i]).coordinates[1];
                 for(int j=0; j<clusters_count; j++)
                 {
-                    int center_x = (int)((ArrayList)centers[j])[0];
-                    int center_y = (int)((ArrayList)centers[j])[1];
-                    double distance = Math.Sqrt(Math.Pow(x - center_x, 2) + Math.Pow(y - center_y, 2));
+                    double center_x = (double)((ArrayList)centers[j])[0];
+                    double center_y = (double)((ArrayList)centers[j])[1];
+                    double distance=0;
+                    for (int k = 0; k < ((Point)points[0]).coordinates.Count; k++)
+                        distance += Math.Pow((double)((Point)points[i]).coordinates[k] - (double)((ArrayList)centers[j])[k], 2);
+                    distance = Math.Sqrt(distance);
                     if(distance<min_distance)
                     {
                         min_distance = distance;
                         min_distance_index = j;
                     }
                 }
-                Point point = new Point((int)((Point)points[i]).coordinates[0],
-                    (int)((Point)points[i]).coordinates[1]);
-                point.cluster_numbers.Add(min_distance_index+1);
+                ArrayList cluster_numbers = new ArrayList();
+                cluster_numbers.Add(min_distance_index + 1);
+                Point point = new Point(((Point)points[i]).coordinates, cluster_numbers);
                 points.RemoveAt(i);
                 points.Insert(i, point);
             }
@@ -49,20 +51,20 @@ namespace Clustering_quality_grade
         {
             for(int i=0; i<clusters_count; i++)
             {
-                double sum_x = 0;
-                double sum_y = 0;
-                int count = 0;
-                for(int j=0; j<points.Count; j++)
+                for (int j = 0; j < ((Point)points[0]).coordinates.Count; j++)
                 {
-                    if ((int)((Point)points[j]).cluster_numbers[0] == i + 1)
+                    double sum = 0;
+                    int count = 0;
+                    for (int k = 0; k < points.Count; k++)
                     {
-                        sum_x += (int)((Point)points[j]).coordinates[0];
-                        sum_y += (int)((Point)points[j]).coordinates[1];
-                        count++;
+                        if ((int)((Point)points[k]).cluster_numbers[0] == i + 1)
+                        {
+                            sum += (double)((Point)points[k]).coordinates[j];
+                            count++;
+                        }
                     }
+                    ((ArrayList)centers[i])[j] = sum / count;
                 }
-                ((ArrayList)centers[i])[0] = (int)(sum_x / count);
-                ((ArrayList)centers[i])[1] = (int)(sum_y / count);
             }
         }
         private ArrayList CopyCenters(ArrayList centers)
@@ -71,8 +73,8 @@ namespace Clustering_quality_grade
             for(int i=0; i<clusters_count; i++)
             {
                 ArrayList cluster_center = new ArrayList();
-                cluster_center.Add((int)((ArrayList)centers[i])[0]);
-                cluster_center.Add((int)((ArrayList)centers[i])[1]);
+                cluster_center.Add((double)((ArrayList)centers[i])[0]);
+                cluster_center.Add((double)((ArrayList)centers[i])[1]);
                 result.Add(cluster_center);
             }
             return result;
@@ -81,9 +83,9 @@ namespace Clustering_quality_grade
         {
             for (int i = 0; i < clusters_count; i++)
             {
-                if((int)((ArrayList)centers1[i])[0]!=(int)((ArrayList)centers2[i])[0])
+                if ((double)((ArrayList)centers1[i])[0] != (double)((ArrayList)centers2[i])[0])
                     return false;
-                if ((int)((ArrayList)centers1[i])[1] != (int)((ArrayList)centers2[i])[1])
+                if ((double)((ArrayList)centers1[i])[1] != (double)((ArrayList)centers2[i])[1])
                     return false;
             }
             return true;
@@ -99,8 +101,8 @@ namespace Clustering_quality_grade
                 for (int i = 0; i < clusters_count; i++)
                 {
                     ArrayList center_coordinates = new ArrayList();
-                    center_coordinates.Add(rand.Next(0, width));
-                    center_coordinates.Add(rand.Next(0, height));
+                    for (int j = 0; j < ((Point)points[0]).coordinates.Count; j++)
+                        center_coordinates.Add((double)UpperBorders[j] * rand.NextDouble() + (double)LowerBorders[j]);
                     centers.Add(center_coordinates);
                 }
                 ChangeClusters(centers);
