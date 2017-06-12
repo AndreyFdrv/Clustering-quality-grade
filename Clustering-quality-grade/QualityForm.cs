@@ -75,12 +75,14 @@ namespace Clustering_quality_grade
             String output;
             if(Iterative_rb.Checked)
             {
-                F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
+                /*F1_meassure f1_meassure = new F1_meassure(ClusterInfo, ClassInfo);
                 output = "F1-мера: " + f1_meassure.F1() + "\r\n";
                 Rand_Jaccard_FM rand_jaccard_fm = new Rand_Jaccard_FM(ClusterInfo, ClassInfo);
                 output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
                 output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
-                output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
+                output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";*/
+                AdjustedMutualInformation mutual_information = new AdjustedMutualInformation(ClassInfo, ClusterInfo);
+                output = "Взаимная информация: " + mutual_information.Compute() + "\r\n";
             }
             else if(Density_rb.Checked)
             {
@@ -99,6 +101,8 @@ namespace Clustering_quality_grade
                 output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
                 output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
                 output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
+                HierarchicalAdjustedMutualInformation mutual_information = new HierarchicalAdjustedMutualInformation(dendrogram, ClassInfo);
+                output += "Взаимная информация: " + mutual_information.Compute() + "\r\n";
             }
             else
             {

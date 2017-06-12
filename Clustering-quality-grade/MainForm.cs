@@ -56,30 +56,7 @@ namespace Clustering_quality_grade
                 points.Add(point);
             }
         }
-        void CreateRandomizedCluster(Point center, int radius)
-        {
-            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
-            for (int i = 0; i < cluster_size; i++)
-            {
-                int r = rand.Next(0, radius);
-                double alpha = rand.Next(0, 359);
-                int x = (int)center.coordinates[0] + (int)(r * Math.Cos(alpha));
-                int y = (int)center.coordinates[1] + (int)(r * Math.Sin(alpha));
-                int color_number = rand.Next(0, 3);
-                if (color_number == 0)
-                    myBrush.Color = Color.Red;
-                if (color_number == 1)
-                    myBrush.Color = Color.Green;
-                if (color_number == 2)
-                    myBrush.Color = Color.Blue;
-                gr.FillEllipse(myBrush, new Rectangle(x - point_radius, y - point_radius,
-                   2 * point_radius, 2 * point_radius));
-                Point point = new Point(x, y);
-                point.cluster_numbers[0] = color_number + 1;
-                points.Add(point);
-            }
-        }
-        private ArrayList CreateClusterInfo(double eps=0.1)
+         private ArrayList CreateClusterInfo(double eps=0.1)
         {
             ArrayList ClusterInfo = new ArrayList();
             if (isFuzzyClustering)
@@ -132,31 +109,59 @@ namespace Clustering_quality_grade
                 {
                     ArrayList row = new ArrayList();
                     if (i < 10)
-                        row.Add(1);
+                        //row.Add(1);
+                        continue;
                     else if (i < 20)
+                        //row.Add(2);
+                        continue;
+                    else if (i == 29)
+                    /*{
+                        row.Add(1);
                         row.Add(2);
-                    else if (i < 30)
-                        row.Add(3);
-                    else if(i==30)
+                    }*/
                     {
                         row.Add(1);
                         row.Add(2);
+                        row.Add(7);
+                    }
+                    else if (i < 30)
+                        //row.Add(3);
+                        continue;
+                    else if (i == 30)
+                        /*{
+                            row.Add(1);
+                            row.Add(2);
+                        }*/
+                    {
+                        row.Add(1);
+                        row.Add(3);
+                        row.Add(7);
                     }
                     else if (i == 31)
+                        /*{
+                            row.Add(1);
+                            row.Add(3);
+                        }*/
                     {
                         row.Add(1);
-                        row.Add(3);
+                        row.Add(4);
+                        row.Add(7);
                     }
                     else if (i == 32)
-                    {
+                    /*{
                         row.Add(2);
                         row.Add(3);
+                    }*/
+                    {
+                        row.Add(1);
+                        row.Add(5);
                     }
                     ClassInfo.Add(row);
                 }
             }
             else
             {
+                Random rand = new Random();
                 for (int i = 0; i < cluster_size; i++)
                 {
                     ArrayList row = new ArrayList();
@@ -184,6 +189,50 @@ namespace Clustering_quality_grade
             }
             return ClassInfo;
         }
+        private ArrayList ElementsList(Dendrogram local_dendrogram)
+        {
+            ArrayList result;
+            if (local_dendrogram.HasValue)
+            {
+                result = new ArrayList();
+                result.Add(local_dendrogram.value);
+                return result;
+            }
+            result = ElementsList(local_dendrogram.left);
+            ArrayList right = ElementsList(local_dendrogram.right);
+            for (int i = 0; i < right.Count; i++)
+                result.Add((int)right[i]);
+            return result;
+        }
+        private void CreateClustersList(Dendrogram local_dendrogram, ref ArrayList ClustersList)
+        {
+            ClustersList.Add(ElementsList(local_dendrogram));
+            if (!local_dendrogram.HasValue)
+            {
+                CreateClustersList(local_dendrogram.left, ref ClustersList);
+                CreateClustersList(local_dendrogram.right, ref ClustersList);
+            }
+        }
+        private ArrayList CreateClusterInfoFromDendrogram(ArrayList ClassInfo)
+        {
+            ArrayList ClusterInfo = new ArrayList();
+            ArrayList ClustersList = new ArrayList();
+            CreateClustersList(dendrogram, ref ClustersList);
+            for (int i = 0; i < ClassInfo.Count; i++)
+            {
+                ArrayList row = new ArrayList();
+                for (int j = 0; j < ClustersList.Count; j++)
+                {
+                    for (int k = 0; k < ((ArrayList)ClustersList[j]).Count; k++)
+                    {
+                        if ((int)((ArrayList)ClustersList[j])[k] == i)
+                            row.Add(j + 1);
+                    }
+                }
+                ClusterInfo.Add(row);
+            }
+            return ClusterInfo;
+        }
         private void QualityGradeButton_Click(object sender, EventArgs e)
         {
             String output;
@@ -196,10 +245,12 @@ namespace Clustering_quality_grade
                 output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
                 output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
                 output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
+                HierarchicalAdjustedMutualInformation mutual_information = new HierarchicalAdjustedMutualInformation(dendrogram, ClassInfo);
+                output += "Взаимная информация: " + mutual_information.Compute() + "\r\n";
             }
             else if(isFuzzyClustering)
             {
-                ArrayList ClusterInfo = CreateClusterInfo();
+                ArrayList ClusterInfo = CreateClassInfo();
                 ArrayList ClassInfo = CreateClassInfo();
                 Fuzzy_F1_meassure f1_meassure = new Fuzzy_F1_meassure(ClusterInfo, ClassInfo);
                 output = "F1-мера: " + f1_meassure.F1() + "\r\n";
@@ -207,6 +258,8 @@ namespace Clustering_quality_grade
                 output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
                 output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
                 output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
+                FuzzyAdjustedMutualInformation mutual_information = new FuzzyAdjustedMutualInformation(ClusterInfo, ClassInfo);
+                output += "Взаимная информация: " + mutual_information.Compute() + "\r\n";
             }
             else
             {
@@ -218,14 +271,10 @@ namespace Clustering_quality_grade
                 output += "Индекс Rand: " + rand_jaccard_fm.Rand_index() + "\r\n";
                 output += "Индекс Jaccard: " + rand_jaccard_fm.Jaccard_index() + "\r\n";
                 output += "Индекс FM: " + rand_jaccard_fm.FM_index() + "\r\n";
+                AdjustedMutualInformation mutual_information = new AdjustedMutualInformation(ClusterInfo, ClassInfo);
+                output += "Взаимная информация: " + mutual_information.Compute() + "\r\n";
             }
             MessageBox.Show(output);
-        }
-
-        private void TimeCalculationButton_Click(object sender, EventArgs e)
-        {
-            TimeCalculationForm form = new TimeCalculationForm();
-            form.ShowDialog();
         }
         private void GenerateForHierarchicalClustering(int depth, int x0, int y0, int width, int height, SolidBrush brush)
         {

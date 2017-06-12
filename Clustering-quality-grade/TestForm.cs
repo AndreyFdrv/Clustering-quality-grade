@@ -79,7 +79,6 @@ namespace Clustering_quality_grade
                 points = form.getPoints();
             }
         }
-
         private void QualityButton_Click(object sender, EventArgs e)
         {
             QualityForm form;

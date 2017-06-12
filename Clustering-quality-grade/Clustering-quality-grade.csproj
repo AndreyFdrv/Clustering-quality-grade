@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,6 +63,8 @@
     <Compile Include="GenerationTypes.Designer.cs">
       <DependentUpon>GenerationTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="modifications of quality assessment criterions\HierarchicalAdjustedMutualInformation.cs" />
+    <Compile Include="modifications of quality assessment criterions\FuzzyAdjustedMutualInformation.cs" />
     <Compile Include="modifications of quality assessment criterions\Density_F1_meassure.cs" />
     <Compile Include="modifications of quality assessment criterions\Fuzzy_F1_meassure.cs" />
     <Compile Include="modifications of quality assessment criterions\Hierarchical_F1_meassure.cs" />
@@ -84,6 +87,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="quality assessment criterions\AdjustedMutualInformation.cs" />
     <Compile Include="quality assessment criterions\Rand_Jaccard_FM.cs" />
     <Compile Include="QualityForm.cs">
       <SubType>Form</SubType>
@@ -102,12 +106,6 @@
     </Compile>
     <Compile Include="TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TimeCalculationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TimeCalculationForm.Designer.cs">
-      <DependentUpon>TimeCalculationForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="ClusteringForm.resx">
       <DependentUpon>ClusteringForm.cs</DependentUpon>
@@ -139,9 +137,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TimeCalculationForm.resx">
-      <DependentUpon>TimeCalculationForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
